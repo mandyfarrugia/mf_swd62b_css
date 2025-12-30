@@ -7,5 +7,4 @@ import { Component } from '@angular/core';
   styleUrl: './records-list-component.css',
 })
 export class RecordsListComponent {
-
 }
