@@ -5,6 +5,7 @@ import { RecordsListComponent } from '../components/records-list-component/recor
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet, HeaderComponent, RecordsListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'

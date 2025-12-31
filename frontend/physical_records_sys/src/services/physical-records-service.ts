@@ -15,4 +15,8 @@ export class PhysicalRecordsService {
   public getPhysicalRecords() : Observable<PhysicalRecordDto[]> {
     return this.http.get<PhysicalRecordDto[]>(this.endpoint);
   }
+
+  public getPhysicalRecordById(id : number) : Observable<PhysicalRecordDto> {
+    return this.http.get<PhysicalRecordDto>(`${this.endpoint}/${id}`);
+  }
 }

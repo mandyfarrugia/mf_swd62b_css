@@ -1,10 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
+import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
 
 @Component({
   selector: 'records-list-component',
-  imports: [],
+  imports: [ FallbackValuePipe ],
   templateUrl: './records-list-component.html',
   styleUrl: './records-list-component.css',
 })

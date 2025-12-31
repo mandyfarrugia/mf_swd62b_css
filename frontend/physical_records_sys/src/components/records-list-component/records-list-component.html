@@ -13,7 +13,7 @@
     @for(physicalRecord of physicalRecords(); track physicalRecord.id) {
     <tr>
       <th scope="row">{{ physicalRecord.id }}</th>
-      <td>{{ physicalRecord.title }}</td>
+      <td>{{ physicalRecord.customerId | fallbackValue }}</td>
       <td>{{ physicalRecord.customerLastName || "No data available!" }}</td>
       <td>{{ physicalRecord.format }}</td>
       <td>{{ physicalRecord.genre }}</td>
