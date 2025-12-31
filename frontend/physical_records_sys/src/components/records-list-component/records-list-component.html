@@ -1,3 +1,9 @@
+<div class="mb-3">
+  <h1>Physical Records List</h1>
+</div>
+
+<hr>
+
 <table class="table">
   <thead>
     <tr>
@@ -14,7 +20,7 @@
     <tr>
       <th scope="row">{{ physicalRecord.id }}</th>
       <td>{{ physicalRecord.customerId | fallbackValue }}</td>
-      <td>{{ physicalRecord.customerLastName || "No data available!" }}</td>
+      <td>{{ physicalRecord.customerLastName | fallbackValue }}</td>
       <td>{{ physicalRecord.format }}</td>
       <td>{{ physicalRecord.genre }}</td>
       <td>
