@@ -10,19 +10,21 @@
     </tr>
   </thead>
   <tbody>
+    @for(physicalRecord of physicalRecords; track physicalRecord.id) {
     <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <th scope="row">{{ physicalRecord.id }}</th>
+      <td>{{ physicalRecord.title }}</td>
+      <td>{{ physicalRecord.customerLastName }}</td>
+      <td>{{ physicalRecord.format }}</td>
+      <td>{{ physicalRecord.genre }}</td>
       <td>
         <div class="btn-group" role="group" aria-label="Action buttons to delete, edit, or view individual physical records.">
           <button type="button" class="btn btn-primary">View</button>
           <button type="button" class="btn btn-warning text-light">Update</button>
           <button type="button" class="btn btn-danger">Delete</button>
-        </div>
+          </div>
       </td>
     </tr>
+    }
   </tbody>
 </table>
