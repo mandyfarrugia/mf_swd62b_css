@@ -27,10 +27,8 @@ export class RecordsListComponent implements OnInit {
 
   loadPhysicalRecords() : void {
     this.physicalRecordsService.getPhysicalRecords().subscribe({
-      next: (data) => {
-        console.log(data)
-        this.physicalRecords.set(data);
-      }
+      next: (data) => this.physicalRecords.set(data),
+      error: (error) => console.log(error)
     });
   }
 }
