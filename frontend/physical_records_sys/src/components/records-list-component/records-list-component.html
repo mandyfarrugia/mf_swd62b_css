@@ -14,7 +14,7 @@
     <tr>
       <th scope="row">{{ physicalRecord.id }}</th>
       <td>{{ physicalRecord.title }}</td>
-      <td>{{ physicalRecord.customerLastName }}</td>
+      <td>{{ physicalRecord.customerLastName || "No data available!" }}</td>
       <td>{{ physicalRecord.format }}</td>
       <td>{{ physicalRecord.genre }}</td>
       <td>
