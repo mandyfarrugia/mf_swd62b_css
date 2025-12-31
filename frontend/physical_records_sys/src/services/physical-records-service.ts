@@ -19,4 +19,16 @@ export class PhysicalRecordsService {
   public getPhysicalRecordById(id : number) : Observable<PhysicalRecordDto> {
     return this.http.get<PhysicalRecordDto>(`${this.endpoint}/${id}`);
   }
+
+  public createPhysicalRecord(record : PhysicalRecordDto) : Observable<PhysicalRecordDto> {
+    return this.http.post<PhysicalRecordDto>(this.endpoint, record);
+  }
+
+  public updatePhysicalRecord(id : number, record : PhysicalRecordDto) : Observable<PhysicalRecordDto> {
+    return this.http.put<PhysicalRecordDto>(`${this.endpoint}/${id}`, record);
+  }
+
+  public deletePhysicalRecord(id : number) : Observable<void> {
+    return this.http.delete<void>(`${this.endpoint}/${id}`);
+  }
 }

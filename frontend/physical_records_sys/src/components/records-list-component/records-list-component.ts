@@ -31,4 +31,11 @@ export class RecordsListComponent implements OnInit {
       error: (error) => console.log(error)
     });
   }
+
+  deletePhysicalRecord(id: number): void {
+    this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
+      next: () => this.loadPhysicalRecords()
+    });
+    console.log(`Delete record with ID: ${id}`);
+  }
 }

@@ -1,5 +1,5 @@
 export interface PhysicalRecordDto {
-    id? : number;
+    id : number;
     title : string;
     artist : string;
     format : string;
