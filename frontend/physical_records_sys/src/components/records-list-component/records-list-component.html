@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    @for(physicalRecord of physicalRecords; track physicalRecord.id) {
+    @for(physicalRecord of physicalRecords(); track physicalRecord.id) {
     <tr>
       <th scope="row">{{ physicalRecord.id }}</th>
       <td>{{ physicalRecord.title }}</td>

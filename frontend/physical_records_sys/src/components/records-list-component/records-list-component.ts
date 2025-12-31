@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 
@@ -13,18 +13,15 @@ export class RecordsListComponent implements OnInit {
     this.loadPhysicalRecords();
   }
 
-  protected physicalRecords : PhysicalRecordDto[] = [];
-
-  public getPhysicalRecords() : PhysicalRecordDto[] {
-    return this.physicalRecords;
-  }
+  physicalRecords = signal<PhysicalRecordDto[]>([]);
 
   constructor(private physicalRecordsService : PhysicalRecordsService) {}
 
   loadPhysicalRecords() : void {
     this.physicalRecordsService.getPhysicalRecords().subscribe({
       next: (data) => {
-        this.physicalRecords = data;
+        console.log(data)
+        this.physicalRecords.set(data);
       }
     });
   }
