@@ -32,7 +32,6 @@ export class LoginComponent {
     this.authenticationService.login(email, password).subscribe({
       next: (user) => {
         console.log('Received user data:', user);
-        this.authenticationService.user = user;
         this.router.navigate(['/records']);
         console.log('Login successful:', user);
       },
