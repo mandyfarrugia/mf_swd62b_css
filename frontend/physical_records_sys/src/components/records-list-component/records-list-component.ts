@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'records-list-component',
@@ -32,10 +33,41 @@ export class RecordsListComponent implements OnInit {
     });
   }
 
-  deletePhysicalRecord(id: number): void {
-    this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
-      next: () => this.loadPhysicalRecords()
+  private showAlert(title: string, text: string, icon: 'success' | 'error' | 'warning' | 'info' | 'question', showCancelButton: boolean, confirmButtonText: string, cancelButtonText: string): Promise<any> {
+    return Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      showCancelButton: showCancelButton,
+      confirmButtonText: confirmButtonText,
+      cancelButtonText: cancelButtonText
     });
-    console.log(`Delete record with ID: ${id}`);
+  }
+
+  deletePhysicalRecord(id: number): void {
+    this.showAlert(
+      'Confirm deletion',
+      'Are you sure you want to delete this physical record?',
+      'warning',
+      true,
+      'Yes, delete it!',
+      'No, keep it'
+    ).then((result) => {
+      if (result.isConfirmed) {
+        this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
+          next: () => {
+            this.loadPhysicalRecords();
+            this.showAlert(
+              'Deleted!',
+              'The physical record has been deleted.',
+              'success',
+              false,
+              'OK',
+              ''
+            );
+          }
+        });
+      }
+    });
   }
 }
