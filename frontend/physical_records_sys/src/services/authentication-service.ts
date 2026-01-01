@@ -10,8 +10,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  public login(username : string, password : string) {
-    return this.http.post<any>(this.endpoint, { username, password });
+  public login(email : string, password : string) {
+    return this.http.post<any>(this.endpoint, { email, password });
   }
 
   public logout() {
