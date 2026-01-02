@@ -1,13 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">
-      {{ this.getTitle() }}
+      <a class="text-light text-decoration-none" routerLink="/records" [textContent]="this.getTitle()"></a>
     </span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-light">
+        <!-- Show the logout button if the user is logged in. Otherwise, for anonymous user, show the login button. -->
         @if (this.authenticationServiceInstance.isAuthenticated()) {
           <li class="nav-item">
             <button class="nav-link btn btn-link" (click)="this.logout()">Logout</button>

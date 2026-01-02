@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
@@ -6,7 +7,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'records-list-component',
-  imports: [ FallbackValuePipe ],
+  imports: [ RouterModule, FallbackValuePipe ],
   templateUrl: './records-list-component.html',
   styleUrl: './records-list-component.css',
 })
