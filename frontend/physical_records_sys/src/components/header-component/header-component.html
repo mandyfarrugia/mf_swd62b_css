@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="mainNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-light">
         <!-- Show the logout button if the user is logged in. Otherwise, for anonymous user, show the login button. -->
-        @if (this.authenticationServiceInstance.isAuthenticated()) {
+        @if (this.authenticationService.isAuthenticated()) {
           <li class="nav-item">
             <button class="nav-link btn btn-link" (click)="this.logout()">Logout</button>
           </li>
@@ -24,6 +24,16 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/records/add-new" routerLinkActive="active">Add records</a>
         </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        @if(this.usernameOfLoggedInUser && this.emailOfLoggedInUser) {
+          <li class="nav-item">
+            <span class="navbar-text text-light small">
+              Logged in as <strong>{{ this.usernameOfLoggedInUser }}</strong>
+              <span class="text-light"> ({{ this.emailOfLoggedInUser }})</span>
+            </span>
+          </li>
+        }
       </ul>
     </div>
   </div>

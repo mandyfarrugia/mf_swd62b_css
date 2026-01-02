@@ -10,23 +10,29 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './header-component.css',
 })
 export class HeaderComponent {
-  private title: string = "Physical Records Registration";
-  private _authenticationService : AuthenticationService;
+  private _title: string = "Physical Records Registration";
 
-  constructor(private authenticationService : AuthenticationService, private router : Router) {
-    this._authenticationService = authenticationService;
+  constructor(private _authenticationService : AuthenticationService, private _router : Router) {
   }
 
   public getTitle(): string {
-    return this.title;
+    return this._title;
   }
 
-  public get authenticationServiceInstance(): AuthenticationService {
+  public get authenticationService(): AuthenticationService {
     return this._authenticationService;
   }
 
+  public get usernameOfLoggedInUser() : string | null {
+    return this._authenticationService.user?.name ?? null;
+  }
+
+  public get emailOfLoggedInUser() : string | null {
+    return this._authenticationService.user?.email ?? null;
+  }
+
   public logout(): Promise<boolean> {
-    this.authenticationService.logout();
-    return this.router.navigate(['/login']);
+    this._authenticationService.logout();
+    return this._router.navigate(['/login']);
   }
 }
