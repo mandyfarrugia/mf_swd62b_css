@@ -25,8 +25,8 @@ export class HeaderComponent {
     return this._authenticationService;
   }
 
-  public logout(): void {
+  public logout(): Promise<boolean> {
     this.authenticationService.logout();
-    this.router.navigate(['/login']);
+    return this.router.navigate(['/login']);
   }
 }

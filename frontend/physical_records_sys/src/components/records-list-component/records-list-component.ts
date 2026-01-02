@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../services/authentication-service';
 import { RouterModule } from '@angular/router';
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
@@ -20,11 +21,19 @@ export class RecordsListComponent implements OnInit {
    * Simply using physicalRecords will cause the following error:
    * TS2488: Type 'WritableSignal<PhysicalRecordDto[]>' must have a '[Symbol.iterator]()' method that returns an iterator. */
   physicalRecords = signal<PhysicalRecordDto[]>([]);
+  canAddRecords : boolean = false;
+  canUpdateRecords : boolean = false;
+  canDeleteRecords : boolean = false;
 
-  constructor(private physicalRecordsService : PhysicalRecordsService) {}
+  constructor(
+    private authenticationService : AuthenticationService,
+    private physicalRecordsService : PhysicalRecordsService) {}
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
+    this.canAddRecords = this.authenticationService.canAddRecords();
+    this.canUpdateRecords = this.authenticationService.canUpdateRecords();
+    this.canDeleteRecords = this.authenticationService.canDeleteRecords();
   }
 
   loadPhysicalRecords() : void {
