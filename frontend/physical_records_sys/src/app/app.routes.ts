@@ -16,7 +16,7 @@ export const routes: Routes = [
       data: { roles: ['clerk', 'manager', 'admin'] }
     },
     {
-      path: 'records/update:id',
+      path: 'records/edit/:id',
       component: RecordsEditComponent,
       canActivate: [roleGuard],
       data: { roles: ['manager', 'admin'] }

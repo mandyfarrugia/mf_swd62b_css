@@ -1,5 +1,5 @@
 import { AuthenticationService } from './../../services/authentication-service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
@@ -7,6 +7,7 @@ import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: true,
   selector: 'records-list-component',
   imports: [ RouterModule, FallbackValuePipe ],
   templateUrl: './records-list-component.html',
@@ -27,7 +28,8 @@ export class RecordsListComponent implements OnInit {
 
   constructor(
     private authenticationService : AuthenticationService,
-    private physicalRecordsService : PhysicalRecordsService) {}
+    private physicalRecordsService : PhysicalRecordsService,
+    private router : Router) {}
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
