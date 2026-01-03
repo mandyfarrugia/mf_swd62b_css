@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecordEditComponent } from './record-edit-component';
+import { RecordsEditComponent } from './records-edit-component';
 
-describe('RecordEditComponent', () => {
-  let component: RecordEditComponent;
-  let fixture: ComponentFixture<RecordEditComponent>;
+describe('RecordsEditComponent', () => {
+  let component: RecordsEditComponent;
+  let fixture: ComponentFixture<RecordsEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecordEditComponent]
+      imports: [RecordsEditComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RecordEditComponent);
+    fixture = TestBed.createComponent(RecordsEditComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
