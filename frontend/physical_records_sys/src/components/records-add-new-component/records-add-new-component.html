@@ -1,5 +1,72 @@
 <div class="mb-3">
   <button class="btn btn-primary" type="button" routerLink="/records"><i class="bi bi-arrow-left"></i> Back to all records</button>
 </div>
+<h1>Add a new physical record</h1>
+<hr>
+<form>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Title</label>
+        <input class="form-control" type="text" placeholder="Record title (for example, Sleeping Sun)" formControlName="email"/>
+        <!-- <small class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">A valid email address is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Artist</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Nightwish)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Format</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Genre</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Release Year</label>
+        <input class="form-control" type="number" placeholder="Year in which record was released (for example, 1999)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Price</label>
+        <input class="form-control" type="number" step="0.01" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Stock</label>
+        <input class="form-control" type="number" placeholder="Stock currently available (for example, 2)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Customer ID</label>
+        <input class="form-control" type="text" placeholder="ID Number (for example, 0473501L)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Customer First Name</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Customer Last Name</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Genre</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <label class="form-label" for="">Genre</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="password"/>
+        <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+    </div>
+    <div class="form-group mb-3">
+        <button class="btn btn-success" type="submit">Add record</button>
+    </div>
+    <!-- <p class="text-danger mt-3">{{ error }}</p> -->
+</form>
 
-<p>records-add-new-component works!</p>

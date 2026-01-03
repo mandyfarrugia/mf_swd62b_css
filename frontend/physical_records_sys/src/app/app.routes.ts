@@ -11,7 +11,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'records', component: RecordsListComponent },
     {
-      path: 'records/:id',
+      path: 'records/view/:id',
       component: RecordIndividualViewComponent,
       canActivate: [roleGuard],
       data: { roles: ['clerk', 'manager', 'admin'] }

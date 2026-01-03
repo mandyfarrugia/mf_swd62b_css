@@ -1,9 +1,7 @@
 <div class="mb-3">
   <h1>Physical Records List</h1>
 </div>
-
 <hr>
-
 <div class="mb-3">
   <div class="btn-group" role="group" aria-label="Buttons to export records to PDF or Excel">
     <button class="btn btn-success" type="button" routerLink="/records/add-new" [disabled]="!this.canAddRecords"><i class="bi bi-plus-circle-fill"></i> Create</button>
@@ -11,7 +9,6 @@
     <button class="btn btn-danger" type="button"><i class="bi bi-file-earmark-pdf-fill"></i> Export to PDF</button>
   </div>
 </div>
-
 <table class="table">
   <thead>
     <tr>
@@ -33,7 +30,7 @@
       <td>{{ physicalRecord.genre }}</td>
       <td>
         <div class="btn-group" role="group" aria-label="Action buttons to delete, edit, or view individual physical records.">
-          <button type="button" class="btn btn-primary" [routerLink]="['/records/', physicalRecord.id]" [disabled]="!this.canViewRecords">View</button>
+          <button type="button" class="btn btn-primary" [routerLink]="['/records/view/', physicalRecord.id]" [disabled]="!this.canViewRecords">View</button>
           <button type="button" class="btn btn-warning text-light" [routerLink]="['/records/edit', physicalRecord.id]" [disabled]="!this.canUpdateRecords">Update</button>
           <button type="button" class="btn btn-danger" (click)="deletePhysicalRecord(physicalRecord.id)" [disabled]="!this.canDeleteRecords">Delete</button>
         </div>
