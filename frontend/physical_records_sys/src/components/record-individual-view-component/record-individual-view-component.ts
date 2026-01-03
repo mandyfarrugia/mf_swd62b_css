@@ -4,7 +4,6 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { CurrencyPipe } from '@angular/common';
-import { AuthenticationService } from '../../services/authentication-service';
 
 @Component({
   standalone: true,
@@ -51,9 +50,7 @@ export class RecordIndividualViewComponent implements OnInit {
   }
 
   public deletePhysicalRecord(id: number | undefined) : void {
-    if(!id) {
-      return;
-    }
+    if(!id) return;
 
     this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
       next: () => this.router.navigate(['/records']),
