@@ -22,6 +22,7 @@ export class RecordsListComponent implements OnInit {
    * Simply using physicalRecords will cause the following error:
    * TS2488: Type 'WritableSignal<PhysicalRecordDto[]>' must have a '[Symbol.iterator]()' method that returns an iterator. */
   physicalRecords = signal<PhysicalRecordDto[]>([]);
+  canViewRecords : boolean = false;
   canAddRecords : boolean = false;
   canUpdateRecords : boolean = false;
   canDeleteRecords : boolean = false;
@@ -33,6 +34,7 @@ export class RecordsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
+    this.canViewRecords = this.authenticationService.canViewRecords();
     this.canAddRecords = this.authenticationService.canAddRecords();
     this.canUpdateRecords = this.authenticationService.canUpdateRecords();
     this.canDeleteRecords = this.authenticationService.canDeleteRecords();

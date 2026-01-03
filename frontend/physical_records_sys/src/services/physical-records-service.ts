@@ -9,8 +9,7 @@ import { PhysicalRecordDto } from '../dtos/physical-records-dto';
 export class PhysicalRecordsService {
   private endpoint: string = "http://localhost:3000/api/records";
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   public getPhysicalRecords() : Observable<PhysicalRecordDto[]> {
     return this.http.get<PhysicalRecordDto[]>(this.endpoint);

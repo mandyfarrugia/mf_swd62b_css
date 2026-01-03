@@ -50,6 +50,10 @@ export class AuthenticationService {
     return this.hasRole('admin');
   }
 
+  public canViewRecords() : boolean {
+    return this.isClerk() || this.isManager() || this.isAdministrator();
+  }
+
   public canAddRecords() : boolean {
     return this.isClerk() || this.isManager() || this.isAdministrator();
   }

@@ -1,1 +1,82 @@
-<p>record-individual-view-component works!</p>
+<div class="mb-3">
+  <button class="btn btn-primary" type="button" routerLink="/records">
+    <i class="bi bi-arrow-left"></i>
+    Back to all records
+  </button>
+</div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="mb-3">
+      <h1 class="card-title mb-0">
+        {{ this.recordById()?.title }}
+      </h1>
+      <h5 class="text-muted">
+        {{ this.recordById()?.artist }}
+      </h5>
+    </div>
+    <hr>
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <strong>Year Released</strong>
+        <p class="mb-0" [innerHTML]="this.recordById()?.releaseYear"></p>
+      </div>
+      <div class="col-md-3">
+        <strong>Format</strong>
+        <p class="mb-0">{{ this.recordById()?.format }}</p>
+      </div>
+      <div class="col-md-3">
+        <strong>Genre</strong>
+        <p class="mb-0">{{ this.recordById()?.genre }}</p>
+      </div>
+      <div class="col-md-3">
+        <strong>Stock Quantity</strong>
+        <p class="mb-0">{{ this.recordById()?.stockQty }}</p>
+      </div>
+    </div>
+    <div class="mb-4">
+      <span class="badge bg-success fs-6">
+        {{ this.recordById()?.price | currency:'EUR':'symbol':'1.2-2' }}
+      </span>
+    </div>
+    <hr>
+    <h5 class="mb-3">
+      <i class="bi bi-person-circle"></i>
+      Customer Information
+    </h5>
+    @if (isCustomerInformationAvailable()) {
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Customer ID:</strong>
+          {{ this.recordById()?.customerId }}
+        </li>
+        <li class="list-group-item">
+          <strong>First Name:</strong>
+          {{ this.recordById()?.customerFirstName }}
+        </li>
+        <li class="list-group-item">
+          <strong>Last Name:</strong>
+          {{ this.recordById()?.customerLastName }}
+        </li>
+        <li class="list-group-item">
+          <strong>Contact:</strong>
+          {{ this.recordById()?.customerContact }}
+        </li>
+        <li class="list-group-item">
+          <strong>Email:</strong>
+          {{ this.recordById()?.customerEmail }}
+        </li>
+      </ul>
+    }
+    @else {
+      <div class="alert alert-warning mb-0">
+        <i class="bi bi-exclamation-triangle"></i>
+        No customer information available.
+      </div>
+    }
+    <div class="btn-group" role="group" aria-label="Action buttons to delete, edit, or view individual physical records.">
+      <button type="button" class="btn btn-primary" [routerLink]="['/records/', this.recordById()?.id]" [disabled]="!this.authenticationService.canViewRecords()">View</button>
+      <button type="button" class="btn btn-warning text-light" [routerLink]="['/records/edit', this.recordById()?.id]" [disabled]="!this.authenticationService.canUpdateRecords()">Update</button>
+      <button type="button" class="btn btn-danger" (click)="deletePhysicalRecord(this.recordById()?.id)" [disabled]="!this.authenticationService.canDeleteRecords()">Delete</button>
+    </div>
+  </div>
+</div>
