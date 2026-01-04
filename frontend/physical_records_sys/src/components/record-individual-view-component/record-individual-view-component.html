@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="mb-3">
       <h1 class="card-title mb-0">
-        {{ this.recordById()?.title }}
+        {{ this.recordById()?.title | lowercase }}
       </h1>
       <h5 class="text-muted">
         {{ this.recordById()?.artist }}

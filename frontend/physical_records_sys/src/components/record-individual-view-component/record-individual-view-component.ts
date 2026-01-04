@@ -3,19 +3,17 @@ import { AuthenticationService } from './../../services/authentication-service';
 import { PhysicalRecordDto } from './../../dtos/physical-records-dto';
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, LowerCasePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-record-individual-view-component',
-  imports: [ RouterLink, RouterModule, CurrencyPipe ],
+  imports: [ RouterLink, RouterModule, CurrencyPipe, LowerCasePipe ],
   templateUrl: './record-individual-view-component.html',
   styleUrl: './record-individual-view-component.css',
 })
 export class RecordIndividualViewComponent implements OnInit {
-  private recordFetchedById : PhysicalRecordDto | null = null;
-
   recordById = signal<PhysicalRecordDto | null>(null);
 
   constructor(
