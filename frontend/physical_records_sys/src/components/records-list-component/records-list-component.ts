@@ -41,14 +41,17 @@ export class RecordsListComponent implements OnInit {
     this.canDeleteRecords = this.authenticationService.canDeleteRecords();
   }
 
-  loadPhysicalRecords() : void {
+  private loadPhysicalRecords() : void {
     this.physicalRecordsService.getPhysicalRecords().subscribe({
       next: (data) => this.physicalRecords.set(data),
       error: (error) => console.log(error)
     });
   }
 
-  deletePhysicalRecord(id: number): void {
+  public exportRecordsToPDF() {}
+  public exportRecordsToExcel() {}
+
+  public deletePhysicalRecord(id: number): void {
     const baseAlertOptions: SweetAlertOptions = {
       confirmButtonColor: '#5dc932ff',
       cancelButtonColor: '#c51414ff'

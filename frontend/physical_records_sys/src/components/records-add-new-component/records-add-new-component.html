@@ -9,12 +9,16 @@
       <div class="form-group mb-3">
           <label class="form-label" for="">Title</label>
           <input class="form-control" type="text" placeholder="Record title (for example, Sleeping Sun)" formControlName="title"/>
-          <!-- <small class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">A valid email address is required.</small> -->
+          @if(formControls['title'].touched && formControls['title'].invalid) {
+            <small class="text-danger">Title is required.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label for="" class="form-label">Artist</label>
           <input class="form-control" type="text" placeholder="Artist (for example, Nightwish)" formControlName="artist"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['artist'].touched && formControls['artist'].invalid) {
+            <small class="text-danger">Artist is required.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label for="" class="form-label">Format</label>
@@ -23,55 +27,79 @@
               <option [disabled]="!format" [value]="format.toLocaleLowerCase()">{{format || "All formats"}}</option>
             }
           </select>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['format'].touched && formControls['format'].invalid) {
+            <small class="text-danger">Please select a record format!</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Genre</label>
-          <input class="form-control" type="text" placeholder="Artist (for example, Kate Bush)" formControlName="genre"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          <select class="form-control" name="genres" id="" title="Dropdown list comprised of physical record formats loaded from backend" formControlName="genre">
+            @for(genre of this.genres(); track genre) {
+              <option [disabled]="!genre" [value]="genre.toLocaleLowerCase()">{{genre || "All genres"}}</option>
+            }
+          </select>
+          @if(formControls['genre'].touched && formControls['genre'].invalid) {
+            <small class="text-danger">Please select a genre!</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Release Year</label>
           <input class="form-control" type="number" placeholder="Year in which record was released (for example, 1999)" formControlName="releaseYear"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['releaseYear'].touched && formControls['releaseYear'].invalid) {
+            <small class="text-danger">Please enter a valid release year from 1948 onwards.</small>
+          }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Price <span class="text-danger"><small>(Do not include the currency sign!)</small></span></label>
-          <input class="form-control" type="number" step="0.01" placeholder="Artist (for example, Kate Bush)" formControlName="price"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          <label class="form-label" for="">Price <span class="text-muted"><small>(Do not include the currency sign!)</small></span></label>
+          <input class="form-control" type="number" step="0.01" placeholder="Price (for example, 59.90)" formControlName="price"/>
+          @if(formControls['price'].touched && formControls['price'].invalid) {
+            <small class="text-danger">Price must be a positive number!</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Stock Quantity</label>
           <input class="form-control" type="number" placeholder="Stock currently available (for example, 2)" formControlName="stockQuantity"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['stockQuantity'].touched && formControls['stockQuantity'].invalid) {
+            <small class="text-danger">Stock quantity must be zero or more.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer ID</label>
           <input class="form-control" type="text" placeholder="ID Number (for example, 0473501L)" formControlName="customerIDNumber"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['customerIDNumber'].touched && formControls['customerIDNumber'].invalid) {
+            <small class="text-danger">ID must start with 0, contain 7 digits, and end with A, G, H, M, or L.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer First Name</label>
           <input class="form-control" type="text" placeholder="Customer's first name (for example, Mandy)" formControlName="customerFirstName"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['customerFirstName'].touched && formControls['customerFirstName'].invalid) {
+            <small class="text-danger">Customer first name is required.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer Last Name</label>
           <input class="form-control" type="text" placeholder="Customer's last name (for example, Farrugia)" formControlName="customerLastName"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['customerLastName'].touched && formControls['customerLastName'].invalid) {
+            <small class="text-danger">Customer last name is required.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer Contact Number</label>
           <input class="form-control" type="text" placeholder="Customer's phone number (for example, 99819288)" formControlName="customerContactNumber"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['customerContactNumber'].touched && formControls['customerContactNumber'].invalid) {
+            <small class="text-danger">A valid contact number is required.</small>
+          }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer Email Address</label>
           <input class="form-control" type="text" placeholder="Customer's email address (for example, mandy.farrugia.c10352@mcast.edu.mt)" formControlName="customerEmailAddress"/>
-          <!-- <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small> -->
+          @if(formControls['customerEmailAddress'].touched && formControls['customerEmailAddress'].invalid) {
+            <small class="text-danger">A valid email address is required.</small>
+          }
       </div>
       <div class="form-group mb-3">
-          <button class="btn btn-success" type="submit">Add record</button>
+          <button class="btn btn-success" type="submit" [disabled]="this.addNewRecordForm.invalid">Add record</button>
       </div>
       <!-- <p class="text-danger mt-3">{{ error }}</p> -->
   </form>
