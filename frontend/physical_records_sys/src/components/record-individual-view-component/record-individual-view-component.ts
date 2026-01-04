@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert-service';
 import { AuthenticationService } from './../../services/authentication-service';
 import { PhysicalRecordDto } from './../../dtos/physical-records-dto';
 import { Component, OnInit, signal } from '@angular/core';
@@ -20,6 +21,7 @@ export class RecordIndividualViewComponent implements OnInit {
   constructor(
     private _currentRoute: ActivatedRoute,
     private _router : Router,
+    private _alertService: AlertService,
     private _authenticationService: AuthenticationService,
     private _physicalRecordsService : PhysicalRecordsService
   ) {}
@@ -44,6 +46,8 @@ export class RecordIndividualViewComponent implements OnInit {
 
   public deletePhysicalRecord(id: number | undefined) : void {
     if(!id) return;
+
+    //this._alertService.showAlert()
 
     this._physicalRecordsService.deletePhysicalRecord(id).subscribe({
       next: () => this._router.navigate(['/records']),

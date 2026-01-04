@@ -1,4 +1,4 @@
-export type Role = 'clerk' | 'manager' | 'admin';
+import { Role } from "../types/role-types";
 
 export interface UserDto {
   id : number;

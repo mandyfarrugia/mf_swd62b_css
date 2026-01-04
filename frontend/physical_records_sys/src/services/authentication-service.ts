@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/internal/operators/tap';
-import { Role, UserDto } from '../dtos/user-dto';
+import { UserDto } from '../dtos/user-dto';
+import { Role } from '../types/role-types';
 
 @Injectable({
   providedIn: 'root',

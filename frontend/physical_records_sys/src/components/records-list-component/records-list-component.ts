@@ -1,10 +1,11 @@
-import { AuthenticationService } from './../../services/authentication-service';
-import { Router, RouterModule } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication-service';
+import { RouterModule } from '@angular/router';
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
+import { AlertService } from '../../services/alert-service';
 
 @Component({
   standalone: true,
@@ -28,9 +29,9 @@ export class RecordsListComponent implements OnInit {
   canDeleteRecords : boolean = false;
 
   constructor(
+    private alertService: AlertService,
     private authenticationService : AuthenticationService,
-    private physicalRecordsService : PhysicalRecordsService,
-    private router : Router) {}
+    private physicalRecordsService : PhysicalRecordsService) {}
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
@@ -47,38 +48,36 @@ export class RecordsListComponent implements OnInit {
     });
   }
 
-  private showAlert(title: string, text: string, icon: 'success' | 'error' | 'warning' | 'info' | 'question', showCancelButton: boolean, confirmButtonText: string, cancelButtonText: string): Promise<any> {
-    return Swal.fire({
-      title: title,
-      text: text,
-      icon: icon,
-      showCancelButton: showCancelButton,
-      confirmButtonText: confirmButtonText,
-      cancelButtonText: cancelButtonText
-    });
-  }
-
   deletePhysicalRecord(id: number): void {
-    this.showAlert(
-      'Confirm deletion',
-      'Are you sure you want to delete this physical record?',
-      'warning',
-      true,
-      'Yes, delete it!',
-      'No, keep it'
-    ).then((result) => {
+    const confirmDeleteOptions: SweetAlertOptions = {
+      title: 'Confirm deletion',
+      text: 'Are you sure you want to delete this',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#5dc932ff',
+      cancelButtonColor: '#c51414ff',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it!'
+    };
+
+    const confirmDeletion: Promise<SweetAlertResult> = this.alertService.showAlert(confirmDeleteOptions);
+
+    confirmDeletion.then((result) => {
       if (result.isConfirmed) {
         this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
           next: () => {
             this.loadPhysicalRecords();
-            this.showAlert(
-              'Deleted!',
-              'The physical record has been deleted.',
-              'success',
-              false,
-              'OK',
-              ''
-            );
+
+            const recordDeletedNotification: SweetAlertOptions = {
+              title: 'Record deleted successfully!',
+              text: 'The physical record has been deleted.',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#5dc932ff',
+              confirmButtonText: 'OK'
+            }
+
+            this.alertService.showAlert(recordDeletedNotification);
           }
         });
       }

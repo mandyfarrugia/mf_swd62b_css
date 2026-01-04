@@ -9,4 +9,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './records-add-new-component.css',
 })
 export class RecordsAddNewComponent {
+  constructor() {
+  }
 }
