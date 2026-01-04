@@ -7,7 +7,7 @@ import { PhysicalRecordDto } from '../dtos/physical-records-dto';
   providedIn: 'root',
 })
 export class PhysicalRecordsService {
-  private endpoint: string = "http://localhost:3000/api/records";
+  private readonly endpoint: string = "http://localhost:3000/api/records";
 
   constructor(private http: HttpClient) {}
 
