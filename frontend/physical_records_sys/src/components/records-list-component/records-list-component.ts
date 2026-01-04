@@ -49,13 +49,17 @@ export class RecordsListComponent implements OnInit {
   }
 
   deletePhysicalRecord(id: number): void {
+    const baseAlertOptions: SweetAlertOptions = {
+      confirmButtonColor: '#5dc932ff',
+      cancelButtonColor: '#c51414ff'
+    };
+
     const confirmDeleteOptions: SweetAlertOptions = {
       title: 'Confirm deletion',
-      text: 'Are you sure you want to delete this',
+      text: 'Are you sure you want to delete this record?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#5dc932ff',
-      cancelButtonColor: '#c51414ff',
+      ...baseAlertOptions,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it!'
     };
@@ -73,7 +77,7 @@ export class RecordsListComponent implements OnInit {
               text: 'The physical record has been deleted.',
               icon: 'success',
               showCancelButton: false,
-              confirmButtonColor: '#5dc932ff',
+              confirmButtonColor: baseAlertOptions.confirmButtonColor,
               confirmButtonText: 'OK'
             }
 
