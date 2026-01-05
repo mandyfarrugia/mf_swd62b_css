@@ -12,8 +12,7 @@ import { Router, RouterModule } from '@angular/router';
 export class HeaderComponent {
   private _title: string = "Physical Records Registration";
 
-  constructor(private _authenticationService : AuthenticationService, private _router : Router) {
-  }
+  constructor(private _authenticationService : AuthenticationService, private _router : Router) {}
 
   public getTitle(): string {
     return this._title;

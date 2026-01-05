@@ -3,6 +3,7 @@ import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GenresService } from '../../services/genres-service';
+import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 
 @Component({
   standalone: true,
@@ -52,7 +53,9 @@ export class RecordsAddNewComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log('hello');
+    if(!this.addNewRecordForm.valid) return;
+    const payload: PhysicalRecordDto = this.addNewRecordForm.getRawValue();
+    console.log(payload);
   }
 
   public get formControls() {
