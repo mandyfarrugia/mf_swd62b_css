@@ -5,7 +5,7 @@
   <div class="card-body">
     <h1>Add a new physical record</h1>
     <hr>
-    <form [formGroup]="addNewRecordForm">
+    <form [formGroup]="addNewRecordForm" (ngSubmit)="onSubmit()">
       <div class="form-group mb-3">
           <label class="form-label" for="">Title</label>
           <input class="form-control" type="text" placeholder="Record title (for example, Sleeping Sun)" formControlName="title"/>
@@ -24,7 +24,7 @@
           <label for="" class="form-label">Format</label>
           <select class="form-control" name="formats" id="" title="Dropdown list comprised of physical record formats loaded from backend" formControlName="format">
             @for(format of this.formats(); track format) {
-              <option [disabled]="!format" [value]="format.toLocaleLowerCase()">{{format || "All formats"}}</option>
+              <option [disabled]="!format" [value]="format">{{format || "All formats"}}</option>
             }
           </select>
           @if(formControls['format'].touched && formControls['format'].invalid) {
@@ -35,7 +35,7 @@
           <label class="form-label" for="">Genre</label>
           <select class="form-control" name="genres" id="" title="Dropdown list comprised of physical record formats loaded from backend" formControlName="genre">
             @for(genre of this.genres(); track genre) {
-              <option [disabled]="!genre" [value]="genre.toLocaleLowerCase()">{{genre || "All genres"}}</option>
+              <option [disabled]="!genre" [value]="genre">{{genre || "All genres"}}</option>
             }
           </select>
           @if(formControls['genre'].touched && formControls['genre'].invalid) {

@@ -51,6 +51,10 @@ export class RecordsAddNewComponent implements OnInit {
     });
   }
 
+  public onSubmit(): void {
+    console.log('hello');
+  }
+
   public get formControls() {
     return this.addNewRecordForm.controls;
   }
