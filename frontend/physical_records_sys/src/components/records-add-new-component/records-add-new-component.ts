@@ -28,8 +28,8 @@ export class RecordsAddNewComponent implements OnInit {
       customerIDNumber: ['', [Validators.required, Validators.pattern(/^0\d{6}[AGHML]$/)]],
       customerFirstName: ['', [Validators.required]],
       customerLastName: ['', [Validators.required]],
-      customerContactNumber: ['', [Validators.required]],
-      customerEmailAddress: ['', [Validators.required]],
+      customerContactNumber: ['', [Validators.required, Validators.pattern(/\d{8}/)]],
+      customerEmailAddress: ['', [Validators.required, Validators.email]],
     });
   }
 
