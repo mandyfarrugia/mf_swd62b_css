@@ -30,8 +30,8 @@ export class RecordsEditComponent implements OnInit {
       customerId: ['', [Validators.required, Validators.pattern(/^0\d{6}[AGHML]$/)]],
       customerFirstName: ['', [Validators.required]],
       customerLastName: ['', [Validators.required]],
-      customerContactNumber: ['', [Validators.required, Validators.pattern(/\d{8}/)]],
-      customerEmailAddress: ['', [Validators.required, Validators.email]],
+      customerContact: ['', [Validators.required, Validators.pattern(/\d{8}/)]],
+      customerEmail: ['', [Validators.required, Validators.email]],
     });
   }
 

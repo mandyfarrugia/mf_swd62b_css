@@ -86,15 +86,15 @@
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer Contact Number</label>
-          <input class="form-control" type="text" placeholder="Customer's phone number (for example, 99819288)" formControlName="customerContactNumber"/>
-          @if(formControls['customerContactNumber'].touched && formControls['customerContactNumber'].invalid) {
+          <input class="form-control" type="text" placeholder="Customer's phone number (for example, 99819288)" formControlName="customerContact"/>
+          @if(formControls['customerContact'].touched && formControls['customerContact'].invalid) {
             <small class="text-danger">A valid contact number is required.</small>
           }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer Email Address</label>
-          <input class="form-control" type="text" placeholder="Customer's email address (for example, mandy.farrugia.c10352@mcast.edu.mt)" formControlName="customerEmailAddress"/>
-          @if(formControls['customerEmailAddress'].touched && formControls['customerEmailAddress'].invalid) {
+          <input class="form-control" type="text" placeholder="Customer's email address (for example, mandy.farrugia.c10352@mcast.edu.mt)" formControlName="customerEmail"/>
+          @if(formControls['customerEmail'].touched && formControls['customerEmail'].invalid) {
             <small class="text-danger">A valid email address is required.</small>
           }
       </div>
