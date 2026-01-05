@@ -1,9 +1,10 @@
 import { FormatsService } from './../../services/formats-service';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GenresService } from '../../services/genres-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
+import { PhysicalRecordsService } from '../../services/physical-records-service';
 
 @Component({
   standalone: true,
@@ -17,7 +18,7 @@ export class RecordsAddNewComponent implements OnInit {
   genres: WritableSignal<string[]> = signal<string[]>([]);
   addNewRecordForm: FormGroup;
 
-  constructor(private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
+  constructor(private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder, private router: Router) {
     this.addNewRecordForm = this.formBuilder.nonNullable.group({
       title: ['', [Validators.required]],
       artist: ['', [Validators.required]],
@@ -25,8 +26,8 @@ export class RecordsAddNewComponent implements OnInit {
       genre: ['', [Validators.required]],
       releaseYear: [0, [Validators.required, Validators.min(1948), Validators.max(new Date().getFullYear())]],
       price: [0, [Validators.required, Validators.min(0)]],
-      stockQuantity: [0, [Validators.required, Validators.min(0)]],
-      customerIDNumber: ['', [Validators.required, Validators.pattern(/^0\d{6}[AGHML]$/)]],
+      stockQty: [0, [Validators.required, Validators.min(0)]],
+      customerId: ['', [Validators.required, Validators.pattern(/^0\d{6}[AGHML]$/)]],
       customerFirstName: ['', [Validators.required]],
       customerLastName: ['', [Validators.required]],
       customerContactNumber: ['', [Validators.required, Validators.pattern(/\d{8}/)]],
@@ -56,6 +57,9 @@ export class RecordsAddNewComponent implements OnInit {
     if(!this.addNewRecordForm.valid) return;
     const payload: PhysicalRecordDto = this.addNewRecordForm.getRawValue();
     console.log(payload);
+    this.physicalRecordsService.createPhysicalRecord(payload).subscribe({
+      next: () => this.router.navigate(['/records'])
+    });
   }
 
   public get formControls() {

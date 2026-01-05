@@ -26,15 +26,15 @@ export class RecordsEditComponent implements OnInit {
       genre: ['', [Validators.required]],
       releaseYear: [0, [Validators.required, Validators.min(1948), Validators.max(new Date().getFullYear())]],
       price: [0, [Validators.required, Validators.min(0)]],
-      stockQuantity: [0, [Validators.required, Validators.min(0)]],
-      customerIDNumber: ['', [Validators.required, Validators.pattern(/^0\d{6}[AGHML]$/)]],
+      stockQty: [0, [Validators.required, Validators.min(0)]],
+      customerId: ['', [Validators.required, Validators.pattern(/^0\d{6}[AGHML]$/)]],
       customerFirstName: ['', [Validators.required]],
       customerLastName: ['', [Validators.required]],
       customerContactNumber: ['', [Validators.required, Validators.pattern(/\d{8}/)]],
       customerEmailAddress: ['', [Validators.required, Validators.email]],
     });
   }
-  
+
   ngOnInit(): void {
     this.formatsService.getFormats().subscribe({
       next: (data) => {

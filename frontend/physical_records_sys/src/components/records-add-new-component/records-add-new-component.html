@@ -58,15 +58,15 @@
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Stock Quantity</label>
-          <input class="form-control" type="number" placeholder="Stock currently available (for example, 2)" formControlName="stockQuantity"/>
-          @if(formControls['stockQuantity'].touched && formControls['stockQuantity'].invalid) {
+          <input class="form-control" type="number" placeholder="Stock currently available (for example, 2)" formControlName="stockQty"/>
+          @if(formControls['stockQty'].touched && formControls['stockQty'].invalid) {
             <small class="text-danger">Stock quantity must be zero or more.</small>
           }
       </div>
       <div class="form-group mb-3">
           <label class="form-label" for="">Customer ID</label>
-          <input class="form-control" type="text" placeholder="ID Number (for example, 0473501L)" formControlName="customerIDNumber"/>
-          @if(formControls['customerIDNumber'].touched && formControls['customerIDNumber'].invalid) {
+          <input class="form-control" type="text" placeholder="ID Number (for example, 0473501L)" formControlName="customerId"/>
+          @if(formControls['customerId'].touched && formControls['customerId'].invalid) {
             <small class="text-danger">ID must start with 0, contain 7 digits, and end with A, G, H, M, or L.</small>
           }
       </div>
@@ -103,7 +103,6 @@
       </div>
       <!-- <p class="text-danger mt-3">{{ error }}</p> -->
   </form>
-
   </div>
 </div>
 
