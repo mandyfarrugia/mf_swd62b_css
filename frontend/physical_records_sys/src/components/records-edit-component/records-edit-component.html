@@ -1,5 +1,7 @@
 <div class="mb-3">
-  <button class="btn btn-primary" type="button" routerLink="/records"><i class="bi bi-arrow-left"></i> Back to all records</button>
+  <button class="btn btn-primary" type="button" routerLink="/records">
+    <i class="bi bi-arrow-left"></i> Back to all records
+  </button>
 </div>
 <div class="card">
   <div class="card-body">
@@ -7,101 +9,105 @@
     <hr>
     <form [formGroup]="editExistingRecordForm" (ngSubmit)="onSubmit()">
       <div class="form-group mb-3">
-          <label class="form-label" for="">Title</label>
-          <input class="form-control" type="text" placeholder="Record title (for example, Sleeping Sun)" formControlName="title"/>
-          @if(formControls['title'].touched && formControls['title'].invalid) {
-            <small class="text-danger">Title is required.</small>
-          }
+        <label class="form-label" for="">Title</label>
+        <input class="form-control" type="text" placeholder="Record title (for example, Sleeping Sun)" formControlName="title"/>
+        @if(formControls['title'].touched && formControls['title'].invalid) {
+          <small class="text-danger">Title is required.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label for="" class="form-label">Artist</label>
-          <input class="form-control" type="text" placeholder="Artist (for example, Nightwish)" formControlName="artist"/>
-          @if(formControls['artist'].touched && formControls['artist'].invalid) {
-            <small class="text-danger">Artist is required.</small>
-          }
+        <label for="" class="form-label">Artist</label>
+        <input class="form-control" type="text" placeholder="Artist (for example, Nightwish)" formControlName="artist"/>
+        @if(formControls['artist'].touched && formControls['artist'].invalid) {
+          <small class="text-danger">Artist is required.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label for="" class="form-label">Format</label>
-          <select class="form-control" name="formats" id="" title="Dropdown list comprised of physical record formats loaded from backend" formControlName="format">
-            @for(format of this.formats(); track format) {
-              <option [disabled]="!format" [value]="format">{{format || "All formats"}}</option>
-            }
-          </select>
-          @if(formControls['format'].touched && formControls['format'].invalid) {
-            <small class="text-danger">Please select a record format!</small>
+        <label for="" class="form-label">Format</label>
+        <select class="form-control" name="formats" id="" title="Dropdown list comprised of physical record formats loaded from backend" formControlName="format">
+          @for(format of this.formats(); track format) {
+          <option [disabled]="!format" [value]="format">{{ format || 'All formats' }}</option>
           }
+        </select>
+        @if(formControls['format'].touched && formControls['format'].invalid) {
+          <small class="text-danger">Please select a record format!</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Genre</label>
-          <select class="form-control" name="genres" id="" title="Dropdown list comprised of physical record formats loaded from backend" formControlName="genre">
-            @for(genre of this.genres(); track genre) {
-              <option [disabled]="!genre" [value]="genre">{{genre || "All genres"}}</option>
-            }
-          </select>
-          @if(formControls['genre'].touched && formControls['genre'].invalid) {
-            <small class="text-danger">Please select a genre!</small>
+        <label class="form-label" for="">Genre</label>
+        <select class="form-control" name="genres" id="" title="Dropdown list comprised of genres loaded from backend" formControlName="genre">
+          @for(genre of this.genres(); track genre) {
+          <option [disabled]="!genre" [value]="genre">{{ genre || 'All genres' }}</option>
           }
+        </select>
+        @if(formControls['genre'].touched && formControls['genre'].invalid) {
+        <small class="text-danger">Please select a genre!</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Release Year</label>
-          <input class="form-control" type="number" placeholder="Year in which record was released (for example, 1999)" formControlName="releaseYear"/>
-          @if(formControls['releaseYear'].touched && formControls['releaseYear'].invalid) {
-            <small class="text-danger">Please enter a valid release year from 1948 onwards.</small>
-          }
+        <label class="form-label" for="">Release Year</label>
+        <input class="form-control" type="number" placeholder="Year in which record was released (for example, 1999)" formControlName="releaseYear"/>
+        @if(formControls['releaseYear'].touched && formControls['releaseYear'].invalid) {
+          <small class="text-danger">Please enter a valid release year from 1948 onwards.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Price <span class="text-muted"><small>(Do not include the currency sign!)</small></span></label>
-          <input class="form-control" type="number" step="0.01" placeholder="Price (for example, 59.90)" formControlName="price"/>
-          @if(formControls['price'].touched && formControls['price'].invalid) {
-            <small class="text-danger">Price must be a positive number!</small>
-          }
+        <label class="form-label" for="">
+          Price
+          <span class="text-muted"><small>(Do not include the currency sign!)</small></span>
+        </label>
+        <input class="form-control" type="number" step="0.01" placeholder="Price (for example, 59.90)" formControlName="price"/>
+        @if(formControls['price'].touched && formControls['price'].invalid) {
+          <small class="text-danger">Price must be a positive number!</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Stock Quantity</label>
-          <input class="form-control" type="number" placeholder="Stock currently available (for example, 2)" formControlName="stockQty"/>
-          @if(formControls['stockQty'].touched && formControls['stockQty'].invalid) {
-            <small class="text-danger">Stock quantity must be zero or more.</small>
-          }
+        <label class="form-label" for="">Stock Quantity</label>
+        <input class="form-control" type="number" placeholder="Stock currently available (for example, 2)" formControlName="stockQty"/>
+        @if(formControls['stockQty'].touched && formControls['stockQty'].invalid) {
+          <small class="text-danger">Stock quantity must be zero or more.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Customer ID</label>
-          <input class="form-control" type="text" placeholder="ID Number (for example, 0473501L)" formControlName="customerId"/>
-          @if(formControls['customerId'].touched && formControls['customerId'].invalid) {
-            <small class="text-danger">ID must start with 0, contain 7 digits, and end with A, G, H, M, or L.</small>
-          }
+        <label class="form-label" for="">Customer ID</label>
+        <input class="form-control" type="text" placeholder="ID Number (for example, 0473501L)" formControlName="customerId"/>
+        @if(formControls['customerId'].touched && formControls['customerId'].invalid) {
+          <small class="text-danger">ID must start with 0, contain 7 digits, and end with A, G, H, M, or L.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Customer First Name</label>
-          <input class="form-control" type="text" placeholder="Customer's first name (for example, Mandy)" formControlName="customerFirstName"/>
-          @if(formControls['customerFirstName'].touched && formControls['customerFirstName'].invalid) {
-            <small class="text-danger">Customer first name is required.</small>
-          }
+        <label class="form-label" for="">Customer First Name</label>
+        <input class="form-control" type="text" placeholder="Customer's first name (for example, Mandy)" formControlName="customerFirstName"/>
+        @if(formControls['customerFirstName'].touched && formControls['customerFirstName'].invalid)
+        {
+          <small class="text-danger">Customer first name is required.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Customer Last Name</label>
-          <input class="form-control" type="text" placeholder="Customer's last name (for example, Farrugia)" formControlName="customerLastName"/>
-          @if(formControls['customerLastName'].touched && formControls['customerLastName'].invalid) {
-            <small class="text-danger">Customer last name is required.</small>
-          }
+        <label class="form-label" for="">Customer Last Name</label>
+        <input class="form-control" type="text" placeholder="Customer's last name (for example, Farrugia)" formControlName="customerLastName"/>
+        @if(formControls['customerLastName'].touched && formControls['customerLastName'].invalid) {
+        <small class="text-danger">Customer last name is required.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Customer Contact Number</label>
-          <input class="form-control" type="text" placeholder="Customer's phone number (for example, 99819288)" formControlName="customerContact"/>
-          @if(formControls['customerContact'].touched && formControls['customerContact'].invalid) {
-            <small class="text-danger">A valid contact number is required.</small>
-          }
+        <label class="form-label" for="">Customer Contact Number</label>
+        <input class="form-control" type="text" placeholder="Customer's phone number (for example, 99819288)" formControlName="customerContact"/>
+        @if(formControls['customerContact'].touched && formControls['customerContact'].invalid) {
+          <small class="text-danger">A valid contact number is required.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <label class="form-label" for="">Customer Email Address</label>
-          <input class="form-control" type="text" placeholder="Customer's email address (for example, mandy.farrugia.c10352@mcast.edu.mt)" formControlName="customerEmail"/>
-          @if(formControls['customerEmail'].touched && formControls['customerEmail'].invalid) {
-            <small class="text-danger">A valid email address is required.</small>
-          }
+        <label class="form-label" for="">Customer Email Address</label>
+        <input class="form-control" type="text" placeholder="Customer's email address (for example, mandy.farrugia.c10352@mcast.edu.mt)" formControlName="customerEmail"/>
+        @if(formControls['customerEmail'].touched && formControls['customerEmail'].invalid) {
+          <small class="text-danger">A valid email address is required.</small>
+        }
       </div>
       <div class="form-group mb-3">
-          <button class="btn btn-success" type="submit" [disabled]="this.editExistingRecordForm.invalid">Add record</button>
+        <button class="btn btn-success" type="submit" [disabled]="this.editExistingRecordForm.invalid">Update record</button>
       </div>
       <!-- <p class="text-danger mt-3">{{ error }}</p> -->
-  </form>
+    </form>
   </div>
 </div>
