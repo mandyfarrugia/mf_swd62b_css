@@ -56,19 +56,21 @@ export class RecordsEditComponent implements OnInit {
   }
 
   private loadRecord(): void {
-    const idFromRequestParameters = Number(this.currentRoute.snapshot.paramMap.get('id'));
-    this.physicalRecordsService.getPhysicalRecordById(idFromRequestParameters).subscribe({
+    this.physicalRecordsService.getPhysicalRecordById(this.idFromRequestParameter).subscribe({
       next: (data) => this.editExistingRecordForm.patchValue(data)
     })
   }
 
   public onSubmit(): void {
     if(!this.editExistingRecordForm.valid) return;
-    const idFromRequestParameters = Number(this.currentRoute.snapshot.paramMap.get('id'));
     const payload = this.editExistingRecordForm.getRawValue();
-    this.physicalRecordsService.updatePhysicalRecord(idFromRequestParameters, payload).subscribe({
+    this.physicalRecordsService.updatePhysicalRecord(this.idFromRequestParameter, payload).subscribe({
       next: () => this.router.navigate(['/records'])
     });
+  }
+
+  private get idFromRequestParameter() : number {
+    return Number(this.currentRoute.snapshot.paramMap.get('id'));
   }
 
   public get formControls() {

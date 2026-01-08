@@ -8,6 +8,7 @@ import { RecordIndividualViewComponent } from '../components/record-individual-v
 
 export const routes: Routes = [
     { path: '', redirectTo: 'records', pathMatch: 'full' },
+    { path: '**', redirectTo: 'records', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'records', component: RecordsListComponent },
     {
@@ -27,6 +28,5 @@ export const routes: Routes = [
       component: RecordsEditComponent,
       canActivate: [roleGuard],
       data: { roles: ['manager', 'admin'] }
-    },
-    { path: '**', redirectTo: 'records' }
+    }
 ];
