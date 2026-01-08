@@ -5,11 +5,12 @@ import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { CurrencyPipe, LowerCasePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import { StockStatusPipe } from "../../pipes/stock-status-pipe";
 
 @Component({
   standalone: true,
   selector: 'app-record-individual-view-component',
-  imports: [ RouterLink, RouterModule, CurrencyPipe, LowerCasePipe ],
+  imports: [RouterLink, RouterModule, CurrencyPipe, LowerCasePipe, StockStatusPipe],
   templateUrl: './record-individual-view-component.html',
   styleUrl: './record-individual-view-component.css',
 })

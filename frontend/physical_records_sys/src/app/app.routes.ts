@@ -5,10 +5,10 @@ import { RecordsAddNewComponent } from '../components/records-add-new-component/
 import { roleGuard } from '../guards/role-guard';
 import { RecordsEditComponent } from '../components/records-edit-component/records-edit-component';
 import { RecordIndividualViewComponent } from '../components/record-individual-view-component/record-individual-view-component';
+import { NotFoundComponent } from '../components/not-found-component/not-found-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'records', pathMatch: 'full' },
-    { path: '**', redirectTo: 'records', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'records', component: RecordsListComponent },
     {
@@ -28,5 +28,6 @@ export const routes: Routes = [
       component: RecordsEditComponent,
       canActivate: [roleGuard],
       data: { roles: ['manager', 'admin'] }
-    }
+    },
+    { path: '**', component: NotFoundComponent, pathMatch: 'full' }
 ];

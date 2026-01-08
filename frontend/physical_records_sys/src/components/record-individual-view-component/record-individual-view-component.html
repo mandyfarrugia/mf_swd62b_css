@@ -30,7 +30,7 @@
       </div>
       <div class="col-md-3">
         <strong>Stock Quantity</strong>
-        <p class="mb-0">{{ this.recordById()?.stockQty }}</p>
+        <p class="mb-0">{{ this.recordById()?.stockQty | stockStatus }}</p>
       </div>
     </div>
     <div class="mb-4">
