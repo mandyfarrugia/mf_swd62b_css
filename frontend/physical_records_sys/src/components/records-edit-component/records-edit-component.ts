@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../../services/authentication-service';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormatsService } from '../../services/formats-service';
 import { GenresService } from '../../services/genres-service';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
@@ -18,7 +18,7 @@ export class RecordsEditComponent implements OnInit {
   genres: WritableSignal<string[]> = signal<string[]>([]);
   editExistingRecordForm: FormGroup;
 
-  constructor(private currentRoute: ActivatedRoute, private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private currentRoute: ActivatedRoute, private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
     this.editExistingRecordForm = this.formBuilder.nonNullable.group({
       title: ['', [Validators.required]],
       artist: ['', [Validators.required]],
@@ -63,6 +63,12 @@ export class RecordsEditComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    if(!this.editExistingRecordForm.valid) return;
+    const idFromRequestParameters = Number(this.currentRoute.snapshot.paramMap.get('id'));
+    const payload = this.editExistingRecordForm.getRawValue();
+    this.physicalRecordsService.updatePhysicalRecord(idFromRequestParameters, payload).subscribe({
+      next: () => this.router.navigate(['/records'])
+    });
   }
 
   public get formControls() {
