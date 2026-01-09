@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+.rock-genre {
+  background-color: #bc0f0f;
+}
+
+.pop-genre {
+  background-color: #ed3fd0;
+}
+
+.hip-hop-genre {
+  background-color: #7a2b94;
+}
+
+.jazz-genre {
+  background-color: #eeee54;
+}
+
+.classical-genre {
+  background-color: #5a51ff;
+}
+
+.electronic-genre {
+  background-color: #34b4ac;
+}
