@@ -4,11 +4,15 @@
 
 .rock-genre {
   background-color: #bc0f0f !important;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .pop-genre {
   background-color: #ed3fd0 !important;
+}
+
+.jazz-genre {
+  background-color: #eeee54 !important;
 }
 
 .hip-hop-genre {
@@ -20,11 +24,7 @@
 }
 
 .alternative-genre {
-  background-color: #00eaff !important;
-}
-
-.jazz-genre {
-  background-color: #eeee54 !important;
+  background-color: #60f52a !important;
 }
 
 .classical-genre {
