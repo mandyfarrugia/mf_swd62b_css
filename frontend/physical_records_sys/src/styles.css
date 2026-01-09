@@ -1,23 +1,36 @@
+.fallback-genre {
+  background-color: transparent;
+}
+
 .rock-genre {
-  background-color: #bc0f0f;
+  background-color: #bc0f0f !important;
+  color: #fff !important;
 }
 
 .pop-genre {
-  background-color: #ed3fd0;
+  background-color: #ed3fd0 !important;
 }
 
 .hip-hop-genre {
-  background-color: #7a2b94;
+  background-color: #7a2b94 !important;
+}
+
+.reggae-genre {
+  background-color: #ff8121 !important;
+}
+
+.alternative-genre {
+  background-color: #00eaff !important;
 }
 
 .jazz-genre {
-  background-color: #eeee54;
+  background-color: #eeee54 !important;
 }
 
 .classical-genre {
-  background-color: #5a51ff;
+  background-color: #5a51ff !important;
 }
 
 .electronic-genre {
-  background-color: #34b4ac;
+  background-color: #34b4ac !important;
 }

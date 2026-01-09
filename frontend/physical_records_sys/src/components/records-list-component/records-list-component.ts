@@ -1,3 +1,4 @@
+import { GenreColourCodingService } from './../../services/genre-colour-coding-service';
 import { AuthenticationService } from '../../services/authentication-service';
 import { RouterModule } from '@angular/router';
 import { Component, OnInit, signal } from '@angular/core';
@@ -6,11 +7,12 @@ import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
 import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { AlertService } from '../../services/alert-service';
+import { NgClass } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'records-list-component',
-  imports: [ RouterModule, FallbackValuePipe ],
+  imports: [RouterModule, FallbackValuePipe, NgClass],
   templateUrl: './records-list-component.html',
   styleUrl: './records-list-component.css',
 })
@@ -29,6 +31,7 @@ export class RecordsListComponent implements OnInit {
   canDeleteRecords : boolean = false;
 
   constructor(
+    private _genreColourCodingService: GenreColourCodingService,
     private alertService: AlertService,
     private authenticationService : AuthenticationService,
     private physicalRecordsService : PhysicalRecordsService) {}
@@ -39,6 +42,10 @@ export class RecordsListComponent implements OnInit {
     this.canAddRecords = this.authenticationService.canAddRecords();
     this.canUpdateRecords = this.authenticationService.canUpdateRecords();
     this.canDeleteRecords = this.authenticationService.canDeleteRecords();
+  }
+
+  public get genreColourCodingService() : GenreColourCodingService {
+    return this._genreColourCodingService;
   }
 
   private loadPhysicalRecords() : void {
