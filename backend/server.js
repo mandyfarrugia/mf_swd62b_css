@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -138,9 +139,9 @@ let records = [
 // ===== Routes =====
 
 // Health check
-app.get('/', (req, res) => {
-  res.send('Record Shop API is running');
-});
+// app.get('/', (req, res) => {
+//   res.send('Record Shop API is running');
+// });
 
 // ---- Auth: POST /api/login ----
 app.post('/api/login', (req, res) => {
@@ -254,6 +255,13 @@ app.delete('/api/records/:id', (req, res) => {
 
   const deleted = records.splice(index, 1)[0];
   res.json({ message: 'Record deleted.', record: deleted });
+});
+
+const angularDistPath = path.join(__dirname, '../frontend/physical_records_sys/dist/physical_records_sys/browser');
+app.use(express.static(angularDistPath));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(angularDistPath, 'index.html'));
 });
 
 // Start server
