@@ -36,6 +36,19 @@ export class RecordsEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadRecord();
+    this.loadFormats();
+    this.loadGenres();
+  }
+
+  private loadRecord(): void {
+    this.physicalRecordsService.getPhysicalRecordById(this.idFromRequestParameter).subscribe({
+      next: (data) => this.editExistingRecordForm.patchValue(data),
+      error: (error) => console.log(error)
+    })
+  }
+
+  private loadFormats(): void {
     this.formatsService.getFormats().subscribe({
       next: (data) => {
         data.unshift('');
@@ -43,7 +56,9 @@ export class RecordsEditComponent implements OnInit {
       },
       error: (error) => console.error(error),
     });
+  }
 
+  public loadGenres(): void {
     this.genresService.getGenres().subscribe({
       next: (data) => {
         data.unshift('');
@@ -51,21 +66,14 @@ export class RecordsEditComponent implements OnInit {
       },
       error: (error) => console.error(error)
     });
-
-    this.loadRecord();
-  }
-
-  private loadRecord(): void {
-    this.physicalRecordsService.getPhysicalRecordById(this.idFromRequestParameter).subscribe({
-      next: (data) => this.editExistingRecordForm.patchValue(data)
-    })
   }
 
   public onSubmit(): void {
     if(!this.editExistingRecordForm.valid) return;
     const payload = this.editExistingRecordForm.getRawValue();
     this.physicalRecordsService.updatePhysicalRecord(this.idFromRequestParameter, payload).subscribe({
-      next: () => this.router.navigate(['/records'])
+      next: () => this.router.navigate(['/records']),
+      error: (error) => console.error(error)
     });
   }
 

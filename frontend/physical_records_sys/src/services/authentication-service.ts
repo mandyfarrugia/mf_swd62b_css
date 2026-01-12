@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/internal/operators/tap';
 import { UserDto } from '../dtos/user-dto';
 import { Role } from '../types/role-types';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private _endpoint : string = "/api/login";
+  private _endpoint : string = `${environment.apiUrl}/login`;
   private _user : UserDto | null = null;
 
   constructor(private http: HttpClient) {}
