@@ -1,3 +1,5 @@
+@import 'bootstrap/dist/css/bootstrap-lumen.min.css';
+
 .fallback-genre {
   background-color: transparent;
 }
