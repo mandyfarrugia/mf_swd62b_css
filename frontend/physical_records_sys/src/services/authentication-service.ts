@@ -12,16 +12,23 @@ export class AuthenticationService {
   private _endpoint : string = `${environment.apiUrl}/login`;
   private _user : UserDto | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const userInLocalStorage: string | null = localStorage.getItem('user');
+    if(userInLocalStorage) {
+      this._user = JSON.parse(userInLocalStorage);
+    }
+  }
 
   public login(email : string, password : string) {
     return this.http.post<UserDto>(this._endpoint, { email, password }).pipe(tap((user) => {
       this._user = user;
+      localStorage.setItem('user', JSON.stringify(user));
     }));
   }
 
   public logout() {
     this._user = null;
+    localStorage.removeItem('user');
   }
 
   public isAuthenticated() : boolean {
