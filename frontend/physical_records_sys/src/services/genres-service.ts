@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GenresService {
-  private readonly endpoint: string = 'http://localhost:3000/api/genres';
+  private readonly endpoint: string = '/api/genres';
 
   constructor(private http: HttpClient) {}
 

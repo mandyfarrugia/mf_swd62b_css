@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class FormatsService {
-  private readonly endpoint: string = 'http://localhost:3000/api/formats';
+  private readonly endpoint: string = '/api/formats';
 
   constructor(private http: HttpClient) {}
 
