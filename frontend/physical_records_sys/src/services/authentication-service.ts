@@ -8,7 +8,7 @@ import { Role } from '../types/role-types';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private _endpoint : string = "http://localhost:3000/api/login";
+  private _endpoint : string = "/api/login";
   private _user : UserDto | null = null;
 
   constructor(private http: HttpClient) {}
