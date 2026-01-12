@@ -10,6 +10,10 @@ import { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { AlertService } from '../../services/alert-service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+import { Title } from '@angular/platform-browser';
+import { pattern } from '@angular/forms/signals';
 
 @Component({
   standalone: true,
@@ -53,20 +57,24 @@ export class RecordsListComponent implements OnInit {
     });
   }
 
+  private mapRecordsToColumns(records: PhysicalRecordDto[]) : (string | number)[][] {
+    return records.map(record => ([
+      record.id ?? 'No ID found!',
+      record.title,
+      record.artist,
+      record.genre,
+      record.format,
+      record.price,
+      record.stockQty
+    ]));
+  }
+
   public exportRecordsToPDF() {
     const document: jsPDF = new jsPDF();
 
     const pdfExportOptions: UserOptions = {
       head: [['Record ID', 'Title', 'Artist', 'Genre', 'Format', 'Price', 'Stock']],
-      body: this.physicalRecords().map(record => ([
-        record.id,
-        record.title,
-        record.artist,
-        record.genre,
-        record.format,
-        record.price,
-        record.stockQty
-      ])),
+      body: this.mapRecordsToColumns(this.physicalRecords()),
       didParseCell: (data: CellHookData) => {
         if(data.section === 'body') {
           const record = this.physicalRecords().at(data.row.index);
@@ -81,7 +89,50 @@ export class RecordsListComponent implements OnInit {
     document.save('export.pdf');
   }
 
-  public exportRecordsToExcel() {}
+  public exportRecordsToExcel() {
+    const workbook : ExcelJS.Workbook = new ExcelJS.Workbook();
+    const sheet: ExcelJS.Worksheet = workbook.addWorksheet('Exported Records');
+
+    sheet.columns = [
+      { header: 'Record ID', key: 'id', width: 8 },
+      { header: 'Title', key: 'title', width: 25 },
+      { header: 'Artist', key: 'artist', width: 25 },
+      { header: 'Genre', key: 'genre', width: 15 },
+      { header: 'Format', key: 'format', width: 15 },
+      { header: 'Stock Available', key: 'stockQty', width: 10 },
+      { header: 'Price', key: 'price', width: 15 }
+    ];
+
+    this.physicalRecords().forEach(record => {
+      const recordRows: ExcelJS.Row = sheet.addRow({
+        id: record.id,
+        title: record.title,
+        artist: record.artist,
+        genre: record.genre,
+        format: record.format,
+        stockQty: record.stockQty,
+        price: record.price
+      });
+
+      const backgroundColourBasedOnGenre = this.genreColourCodingService.getArgbBackgroundHexColourForGenre(record?.genre.toLocaleLowerCase()).replace('#', '');
+      const foregroundColourBasedOnGenre = this.genreColourCodingService.getArgbForegroundHexColourForGenre(record?.genre.toLocaleLowerCase()).replace('#', '');
+
+      if(backgroundColourBasedOnGenre && foregroundColourBasedOnGenre) {
+        recordRows.eachCell(cell => {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: backgroundColourBasedOnGenre }
+          }
+        });
+      }
+    });
+
+    workbook.xlsx.writeBuffer().then(buffer => {
+      const blob: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+      saveAs(blob, 'records.xlsx');
+    });
+  }
 
   public deletePhysicalRecord(id: number): void {
     const baseAlertOptions: SweetAlertOptions = {

@@ -1,5 +1,7 @@
 export type GenreColourCodedTypes = {
   cssClass: string,
   backgroundHexColour: string,
-  foregroundHexColour: string
+  foregroundHexColour: string,
+  argbBackgroundHexColour: string,
+  argbForegroundHexColour: string
 }
