@@ -11,7 +11,7 @@
         <!-- Show the logout button if the user is logged in. Otherwise, for anonymous user, show the login button. -->
         @if (this.authenticationService.isAuthenticated()) {
           <li class="nav-item">
-            <button class="nav-link btn btn-link" (click)="this.logout()">Logout</button>
+            <button class="nav-link" (click)="this.logout()">Logout</button>
           </li>
         } @else {
           <li class="nav-item">
