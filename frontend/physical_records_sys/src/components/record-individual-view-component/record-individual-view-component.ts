@@ -44,7 +44,7 @@ export class RecordIndividualViewComponent implements OnInit {
 
     this._physicalRecordsService.getPhysicalRecordById(idParsedFromRequestParameter).subscribe({
       next: (data) => this.recordById.set(data),
-      error: (error) => console.error(error)
+      error: () => this._router.navigate(['/error-404-not-found'])
     });
   }
 

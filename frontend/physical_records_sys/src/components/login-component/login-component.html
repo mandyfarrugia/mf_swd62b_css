@@ -1,18 +1,22 @@
-<h1>Login</h1>
-<hr>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group mb-3">
-        <label class="form-label" for="">Email</label>
-        <input class="form-control" type="text" placeholder="local-part@domain-name" formControlName="email"/>
-        <small class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">A valid email address is required.</small>
-    </div>
-    <div class="form-group mb-3">
-        <label class="form-label" for="">Password</label>
-        <input class="form-control" type="password" placeholder="Enter password" formControlName="password"/>
-        <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small>
-    </div>
-    <div class="form-group mb-3">
-        <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">Login</button>
-    </div>
-    <p class="text-danger mt-3">{{ error }}</p>
-</form>
+<div class="card">
+  <div class="card-body">
+    <h1>Login</h1>
+    <hr>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-3">
+            <label class="form-label" for="">Email</label>
+            <input class="form-control" type="text" placeholder="local-part@domain-name" formControlName="email"/>
+            <small class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">A valid email address is required.</small>
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label" for="">Password</label>
+            <input class="form-control" type="password" placeholder="Enter password" formControlName="password"/>
+            <small class="text-danger" *ngIf="formControls['password'].touched && formControls['password'].invalid">A valid password is required.</small>
+        </div>
+        <div class="form-group mb-3">
+            <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">Login</button>
+        </div>
+        <p class="text-danger mt-3">{{ error }}</p>
+    </form>
+  </div>
+</div>

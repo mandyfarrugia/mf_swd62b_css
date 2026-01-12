@@ -29,5 +29,6 @@ export const routes: Routes = [
       canActivate: [roleGuard],
       data: { roles: ['manager', 'admin'] }
     },
+    { path: 'error-404-not-found', component: NotFoundComponent },
     { path: '**', component: NotFoundComponent, pathMatch: 'full' }
 ];
