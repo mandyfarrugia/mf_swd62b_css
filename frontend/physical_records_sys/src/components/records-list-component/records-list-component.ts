@@ -12,8 +12,6 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-import { Title } from '@angular/platform-browser';
-import { pattern } from '@angular/forms/signals';
 
 @Component({
   standalone: true,
@@ -64,7 +62,7 @@ export class RecordsListComponent implements OnInit {
       record.artist,
       record.genre,
       record.format,
-      record.price,
+      record.price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR' }),
       record.stockQty
     ]));
   }
@@ -94,14 +92,16 @@ export class RecordsListComponent implements OnInit {
     const sheet: ExcelJS.Worksheet = workbook.addWorksheet('Exported Records');
 
     sheet.columns = [
-      { header: 'Record ID', key: 'id', width: 8 },
+      { header: 'Record ID', key: 'id', width: 15 },
       { header: 'Title', key: 'title', width: 25 },
       { header: 'Artist', key: 'artist', width: 25 },
       { header: 'Genre', key: 'genre', width: 15 },
       { header: 'Format', key: 'format', width: 15 },
-      { header: 'Stock Available', key: 'stockQty', width: 10 },
+      { header: 'Stock Available', key: 'stockQty', width: 15 },
       { header: 'Price', key: 'price', width: 15 }
     ];
+
+    sheet.getRow(1).font = { bold: true };
 
     this.physicalRecords().forEach(record => {
       const recordRows: ExcelJS.Row = sheet.addRow({
@@ -123,13 +123,18 @@ export class RecordsListComponent implements OnInit {
             type: 'pattern',
             pattern: 'solid',
             fgColor: { argb: backgroundColourBasedOnGenre }
+          },
+          cell.font = {
+            color: { argb: foregroundColourBasedOnGenre }
           }
         });
       }
     });
 
+    sheet.getColumn('price').numFmt = '€#,##0.00';
+
     workbook.xlsx.writeBuffer().then(buffer => {
-      const blob: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+      const blob: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       saveAs(blob, 'records.xlsx');
     });
   }
