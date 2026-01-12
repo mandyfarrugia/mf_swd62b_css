@@ -16,18 +16,18 @@ export class GenreColourCodingService {
     'electronic': { cssClass: 'electronic-genre', backgroundHexColour: '#34b4ac', foregroundHexColour: '#000000' }
   };
 
-  public getCssClassForGenre(genre: string) : string {
+  public getCssClassForGenre(genre: string | undefined) : string {
     if(!genre) return 'fallback-genre';
     return this.genresMappedToCssClasses[genre.toLocaleLowerCase()].cssClass ?? 'fallback-genre';
   }
 
-  public getBackgroundHexColourForGenre(genre: string) {
-    if(!genre) return 'fallback-genre';
+  public getBackgroundHexColourForGenre(genre: string | undefined) {
+    if(!genre) return '#ffffff';
     return this.genresMappedToCssClasses[genre.toLocaleLowerCase()].backgroundHexColour ?? '#ffffff';
   }
 
-  public getForegroundHexColourForGenre(genre: string) {
-    if(!genre) return 'fallback-genre';
+  public getForegroundHexColourForGenre(genre: string | undefined) {
+    if(!genre) return '#000000';
     return this.genresMappedToCssClasses[genre.toLocaleLowerCase()].foregroundHexColour ?? '#000000';
   }
 }

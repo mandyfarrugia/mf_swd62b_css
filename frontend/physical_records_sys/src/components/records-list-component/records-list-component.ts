@@ -1,3 +1,4 @@
+import { CellHookData, UserOptions } from './../../../node_modules/jspdf-autotable/dist/index.d';
 import { GenreColourCodingService } from './../../services/genre-colour-coding-service';
 import { AuthenticationService } from '../../services/authentication-service';
 import { RouterModule } from '@angular/router';
@@ -5,14 +6,15 @@ import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
-import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
+import { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { AlertService } from '../../services/alert-service';
-import { NgClass } from '@angular/common';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   standalone: true,
   selector: 'records-list-component',
-  imports: [RouterModule, FallbackValuePipe, NgClass],
+  imports: [RouterModule, FallbackValuePipe],
   templateUrl: './records-list-component.html',
   styleUrl: './records-list-component.css',
 })
@@ -31,7 +33,7 @@ export class RecordsListComponent implements OnInit {
   canDeleteRecords : boolean = false;
 
   constructor(
-    private _genreColourCodingService: GenreColourCodingService,
+    private genreColourCodingService: GenreColourCodingService,
     private alertService: AlertService,
     private authenticationService : AuthenticationService,
     private physicalRecordsService : PhysicalRecordsService) {}
@@ -44,10 +46,6 @@ export class RecordsListComponent implements OnInit {
     this.canDeleteRecords = this.authenticationService.canDeleteRecords();
   }
 
-  public get genreColourCodingService() : GenreColourCodingService {
-    return this._genreColourCodingService;
-  }
-
   private loadPhysicalRecords() : void {
     this.physicalRecordsService.getPhysicalRecords().subscribe({
       next: (data) => this.physicalRecords.set(data),
@@ -55,7 +53,34 @@ export class RecordsListComponent implements OnInit {
     });
   }
 
-  public exportRecordsToPDF() {}
+  public exportRecordsToPDF() {
+    const document: jsPDF = new jsPDF();
+
+    const pdfExportOptions: UserOptions = {
+      head: [['Record ID', 'Title', 'Artist', 'Genre', 'Format', 'Price', 'Stock']],
+      body: this.physicalRecords().map(record => ([
+        record.id,
+        record.title,
+        record.artist,
+        record.genre,
+        record.format,
+        record.price,
+        record.stockQty
+      ])),
+      didParseCell: (data: CellHookData) => {
+        if(data.section === 'body') {
+          const record = this.physicalRecords().at(data.row.index);
+          const backgroundColour = this.genreColourCodingService.getBackgroundHexColourForGenre(record?.genre);
+          data.cell.styles.fillColor = backgroundColour;
+          data.cell.styles.textColor = this.genreColourCodingService.getForegroundHexColourForGenre(record?.genre);
+        }
+      }
+    };
+
+    autoTable(document, pdfExportOptions);
+    document.save('export.pdf');
+  }
+
   public exportRecordsToExcel() {}
 
   public deletePhysicalRecord(id: number): void {
