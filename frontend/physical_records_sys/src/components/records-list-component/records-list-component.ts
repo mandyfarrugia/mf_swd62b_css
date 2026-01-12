@@ -143,13 +143,7 @@ export class RecordsListComponent implements OnInit {
   }
 
   public deletePhysicalRecord(id: number): void {
-    const confirmDeletion: Promise<SweetAlertResult> = this.alertService.showAlert(confirmDeleteOptions);
-
-    confirmDeletion.then((result) => {
-      if (result.isConfirmed) {
-        this.physicalRecordsFrontendService.delete(id, () => this.handleSuccessfulDeletion());
-      }
-    });
+    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.handleSuccessfulDeletion());
   }
 
   private handleSuccessfulDeletion() {

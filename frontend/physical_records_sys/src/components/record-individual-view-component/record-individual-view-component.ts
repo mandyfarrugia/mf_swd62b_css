@@ -7,6 +7,7 @@ import { PhysicalRecordsService } from '../../services/physical-records-service'
 import { CurrencyPipe, LowerCasePipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { StockStatusPipe } from "../../pipes/stock-status-pipe";
+import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ export class RecordIndividualViewComponent implements OnInit {
     private _alertService: AlertService,
     private _authenticationService: AuthenticationService,
     private _physicalRecordsService : PhysicalRecordsService,
+    private _physicalRecordsFrontendService: PhysicalRecordsFrontendService,
     private _stocksService: StocksService
   ) {}
 
@@ -52,12 +54,6 @@ export class RecordIndividualViewComponent implements OnInit {
 
   public deletePhysicalRecord(id: number | undefined) : void {
     if(!id) return;
-
-    //this._alertService.showAlert()
-
-    this._physicalRecordsService.deletePhysicalRecord(id).subscribe({
-      next: () => this._router.navigate(['/records']),
-      error: (error) => console.error(error)
-    });
+    this._physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this._router.navigate(['/records']));
   }
 }
