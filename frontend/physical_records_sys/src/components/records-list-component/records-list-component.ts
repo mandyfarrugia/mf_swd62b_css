@@ -12,6 +12,8 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
+import { baseAlertOptions, confirmDeleteOptions, recordDeletedNotification } from '../../shared/alert-options';
 
 @Component({
   standalone: true,
@@ -38,7 +40,8 @@ export class RecordsListComponent implements OnInit {
     private genreColourCodingService: GenreColourCodingService,
     private alertService: AlertService,
     private authenticationService : AuthenticationService,
-    private physicalRecordsService : PhysicalRecordsService) {}
+    private physicalRecordsService : PhysicalRecordsService,
+    private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
@@ -140,42 +143,17 @@ export class RecordsListComponent implements OnInit {
   }
 
   public deletePhysicalRecord(id: number): void {
-    const baseAlertOptions: SweetAlertOptions = {
-      confirmButtonColor: '#5dc932ff',
-      cancelButtonColor: '#c51414ff'
-    };
-
-    const confirmDeleteOptions: SweetAlertOptions = {
-      title: 'Confirm deletion',
-      text: 'Are you sure you want to delete this record?',
-      icon: 'warning',
-      showCancelButton: true,
-      ...baseAlertOptions,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it!'
-    };
-
     const confirmDeletion: Promise<SweetAlertResult> = this.alertService.showAlert(confirmDeleteOptions);
 
     confirmDeletion.then((result) => {
       if (result.isConfirmed) {
-        this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
-          next: () => {
-            this.loadPhysicalRecords();
-
-            const recordDeletedNotification: SweetAlertOptions = {
-              title: 'Record deleted successfully!',
-              text: 'The physical record has been deleted.',
-              icon: 'success',
-              showCancelButton: false,
-              confirmButtonColor: baseAlertOptions.confirmButtonColor,
-              confirmButtonText: 'OK'
-            }
-
-            this.alertService.showAlert(recordDeletedNotification);
-          }
-        });
+        this.physicalRecordsFrontendService.delete(id, () => this.handleSuccessfulDeletion());
       }
     });
+  }
+
+  private handleSuccessfulDeletion() {
+    this.loadPhysicalRecords();
+    this.alertService.showAlert(recordDeletedNotification);
   }
 }
