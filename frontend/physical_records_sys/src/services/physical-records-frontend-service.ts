@@ -5,6 +5,7 @@ import { PhysicalRecordsService } from './physical-records-service';
 import { SweetAlertResult } from 'sweetalert2';
 import { confirmDeleteOptions } from '../shared/alert-options';
 import { AlertService } from './alert-service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,12 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
     });
   }
 
-  update(id: number, physicalRecordToUpdate: PhysicalRecordDto): void {
-    throw new Error('Method not implemented.');
+  update(id: number, formGroup: FormGroup, successCallback: () => void, errorCallback: (error: any) => void): void {
+    const payload = formGroup.getRawValue();
+    this.physicalRecordsService.updatePhysicalRecord(id, payload).subscribe({
+      next: () => successCallback(),
+      error: (error) => errorCallback(error)
+    });
   }
 
   public handleConfirmationDeletion(id: number, successCallback: () => void): void {

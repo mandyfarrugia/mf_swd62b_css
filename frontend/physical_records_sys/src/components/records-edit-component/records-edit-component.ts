@@ -5,6 +5,7 @@ import { FormatsService } from '../../services/formats-service';
 import { GenresService } from '../../services/genres-service';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { CurrentRouteService } from '../../services/current-route-service';
+import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
 
 @Component({
   standalone: true,
@@ -19,7 +20,7 @@ export class RecordsEditComponent implements OnInit {
   editExistingRecordForm: FormGroup;
   recordId!: number;
 
-  constructor(private router: Router, private currentRouterService: CurrentRouteService, private currentRoute: ActivatedRoute, private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private currentRouterService: CurrentRouteService, private currentRoute: ActivatedRoute, private physicalRecordsService: PhysicalRecordsService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
     this.editExistingRecordForm = this.formBuilder.nonNullable.group({
       title: ['', [Validators.required]],
       artist: ['', [Validators.required]],
@@ -72,11 +73,13 @@ export class RecordsEditComponent implements OnInit {
 
   public onSubmit(): void {
     if(!this.editExistingRecordForm.valid) return;
-    const payload = this.editExistingRecordForm.getRawValue();
-    this.physicalRecordsService.updatePhysicalRecord(this.recordId, payload).subscribe({
-      next: () => this.router.navigate(['/records']),
-      error: (error) => console.error(error)
-    });
+
+    this.physicalRecordsFrontendService.update(
+      this.recordId,
+      this.editExistingRecordForm,
+      () => this.router.navigate(['/records']),
+      (error) => console.error(error)
+    )
   }
 
   public get formControls() {
