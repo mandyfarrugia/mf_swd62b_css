@@ -75,8 +75,8 @@
     }
     <hr>
     <div class="btn-group" role="group" aria-label="Action buttons to delete or edit individual physical records.">
-      <button type="button" class="btn btn-warning text-light" [routerLink]="['/records/edit', this.recordById()?.id]" [disabled]="!this.authenticationService.canUpdateRecords()">Update</button>
-      <button type="button" class="btn btn-danger" (click)="deletePhysicalRecord(this.recordById()?.id)" [disabled]="!this.authenticationService.canDeleteRecords()">Delete</button>
+      <button type="button" class="btn btn-warning text-light" [routerLink]="['/records/edit', this.recordById()?.id]" [disabled]="!this.authenticationService$.canUpdateRecords()">Update</button>
+      <button type="button" class="btn btn-danger" (click)="deletePhysicalRecord(this.recordById()?.id)" [disabled]="!this.authenticationService$.canDeleteRecords()">Delete</button>
     </div>
   </div>
 </div>

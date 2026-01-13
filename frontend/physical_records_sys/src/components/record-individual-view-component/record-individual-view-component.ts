@@ -8,6 +8,7 @@ import { CurrencyPipe, LowerCasePipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { StockStatusPipe } from "../../pipes/stock-status-pipe";
 import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
+import { CurrentRouteService } from '../../services/current-route-service';
 
 @Component({
   standalone: true,
@@ -17,34 +18,36 @@ import { PhysicalRecordsFrontendService } from '../../services/physical-records-
   styleUrl: './record-individual-view-component.css',
 })
 export class RecordIndividualViewComponent implements OnInit {
+  recordId!: number;
   recordById = signal<PhysicalRecordDto | null>(null);
 
   constructor(
-    private _currentRoute: ActivatedRoute,
-    private _router : Router,
-    private _alertService: AlertService,
-    private _authenticationService: AuthenticationService,
-    private _physicalRecordsService : PhysicalRecordsService,
-    private _physicalRecordsFrontendService: PhysicalRecordsFrontendService,
-    private _stocksService: StocksService
+    private currentRouterService: CurrentRouteService,
+    private currentRoute: ActivatedRoute,
+    private router : Router,
+    private alertService: AlertService,
+    private authenticationService: AuthenticationService,
+    private physicalRecordsService : PhysicalRecordsService,
+    private physicalRecordsFrontendService: PhysicalRecordsFrontendService,
+    private stocksService: StocksService
   ) {}
 
-  public get authenticationService() : AuthenticationService {
-    return this._authenticationService;
+  public get authenticationService$() : AuthenticationService {
+    return this.authenticationService;
   }
 
   public getCssClassBasedOnStock(stockQuantity: number | undefined) : string | null {
     if(stockQuantity === undefined) return null;
-    return this._stocksService.getCssClass(stockQuantity);
+    return this.stocksService.getCssClass(stockQuantity);
   }
 
   ngOnInit(): void {
-    const idParsedFromRequestParameter = Number(this._currentRoute.snapshot.paramMap.get('id'));
+    const idParsedFromRequestParameter: number = Number(this.currentRouterService.getStringifiedIdFromRequestBody(this.currentRoute));
     if(!idParsedFromRequestParameter) return;
 
-    this._physicalRecordsService.getPhysicalRecordById(idParsedFromRequestParameter).subscribe({
+    this.physicalRecordsService.getPhysicalRecordById(idParsedFromRequestParameter).subscribe({
       next: (data) => this.recordById.set(data),
-      error: () => this._router.navigate(['/error-404-not-found'])
+      error: () => this.router.navigate(['/error-404-not-found'])
     });
   }
 
@@ -54,6 +57,6 @@ export class RecordIndividualViewComponent implements OnInit {
 
   public deletePhysicalRecord(id: number | undefined) : void {
     if(!id) return;
-    this._physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this._router.navigate(['/records']));
+    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.router.navigate(['/records']));
   }
 }
