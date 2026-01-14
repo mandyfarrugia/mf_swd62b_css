@@ -52,13 +52,7 @@ export class RecordsEditComponent implements OnInit {
   }
 
   private loadFormats(): void {
-    this.formatsService.getFormats().subscribe({
-      next: (data) => {
-        data.unshift('');
-        this.formats.set(data);
-      },
-      error: (error) => console.error(error),
-    });
+    this.physicalRecordsFrontendService.getAllFormats(this.formatsService, this.formats);
   }
 
   public loadGenres(): void {

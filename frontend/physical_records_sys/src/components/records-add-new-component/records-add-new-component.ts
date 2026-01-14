@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { GenresService } from '../../services/genres-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
+import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
 
 @Component({
   standalone: true,
@@ -18,7 +19,7 @@ export class RecordsAddNewComponent implements OnInit {
   genres: WritableSignal<string[]> = signal<string[]>([]);
   addNewRecordForm: FormGroup;
 
-  constructor(private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formBuilder: FormBuilder, private router: Router) {
     this.addNewRecordForm = this.formBuilder.nonNullable.group({
       title: ['', [Validators.required]],
       artist: ['', [Validators.required]],
@@ -36,21 +37,16 @@ export class RecordsAddNewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formatsService.getFormats().subscribe({
-      next: (data) => {
-        data.unshift('');
-        this.formats.set(data);
-      },
-      error: (error) => console.error(error),
-    });
+    this.loadFormats();
+    this.loadGenres();
+  }
 
-    this.genresService.getGenres().subscribe({
-      next: (data) => {
-        data.unshift('');
-        this.genres.set(data);
-      },
-      error: (error) => console.error(error)
-    });
+  private loadFormats(): void {
+    this.physicalRecordsFrontendService.getAllFormats(this.formatsService, this.formats);
+  }
+
+  public loadGenres(): void {
+    this.physicalRecordsFrontendService.getAllGenres(this.genresService, this.genres);
   }
 
   public onSubmit(): void {
