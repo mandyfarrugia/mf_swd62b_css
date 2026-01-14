@@ -19,6 +19,7 @@ export class RecordsEditComponent implements OnInit {
   genres: WritableSignal<string[]> = signal<string[]>([]);
   editExistingRecordForm: FormGroup;
   recordId!: number;
+  error: WritableSignal<string | null> = signal<string | null>(null);
 
   constructor(private router: Router, private currentRouterService: CurrentRouteService, private currentRoute: ActivatedRoute, private physicalRecordsApiService: PhysicalRecordsApiService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
     this.editExistingRecordForm = this.formBuilder.nonNullable.group({
@@ -47,27 +48,24 @@ export class RecordsEditComponent implements OnInit {
   private loadRecord(): void {
     this.physicalRecordsApiService.getPhysicalRecordById(this.recordId).subscribe({
       next: (data) => this.editExistingRecordForm.patchValue(data),
-      error: (error) => console.log(error)
+      error: (error) => {
+        this.error.set(error);
+        console.error(error);
+      }
     })
   }
 
   private loadFormats(): void {
-    this.physicalRecordsFrontendService.getAllFormats(this.formatsService, this.formats);
+    this.physicalRecordsFrontendService.getAllFormats(this.formatsService, this.formats, this.error);
   }
 
   public loadGenres(): void {
-    this.physicalRecordsFrontendService.getAllGenres(this.genresService, this.genres);
+    this.physicalRecordsFrontendService.getAllGenres(this.genresService, this.genres, this.error);
   }
 
   public onSubmit(): void {
     if(!this.editExistingRecordForm.valid) return;
-
-    this.physicalRecordsFrontendService.update(
-      this.recordId,
-      this.editExistingRecordForm,
-      () => this.router.navigate(['/records']),
-      (error) => console.error(error)
-    )
+    this.physicalRecordsFrontendService.update(this.recordId, this.editExistingRecordForm, () => this.router.navigate(['/records']), this.error);
   }
 
   public get formControls() {

@@ -2,5 +2,5 @@ import { WritableSignal } from '@angular/core';
 import { FormatsService } from "../services/formats-service";
 
 export interface FormatsRepository {
-  getAllFormats(formatsService: FormatsService, formats: WritableSignal<string[]>): void;
+  getAllFormats(formatsService: FormatsService, formats: WritableSignal<string[]>, error: WritableSignal<string | null>): void;
 }

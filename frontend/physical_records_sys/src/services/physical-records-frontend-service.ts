@@ -16,47 +16,59 @@ import { FormatsService } from './formats-service';
 export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository, GenresRepository, FormatsRepository {
   constructor(private alertService: AlertService, private physicalRecordsApiService: PhysicalRecordsApiService) {}
 
-  getAllFormats(formatsService: FormatsService, formats: WritableSignal<string[]>): void {
+  getAllFormats(formatsService: FormatsService, formats: WritableSignal<string[]>, error: WritableSignal<string | null>): void {
     formatsService.getFormats().subscribe({
-      next: (data) => {
+      next: (data: string[]) => {
         data.unshift('');
         formats.set(data);
       },
-      error: (error) => console.error(error),
+      error: (error) => {
+        error.set(error);
+        console.error(error);
+      }
     });
   }
 
-  public getAllGenres(genresService: GenresService, genres: WritableSignal<string[]>): void {
+  public getAllGenres(genresService: GenresService, genres: WritableSignal<string[]>, error: WritableSignal<string | null>): void {
     genresService.getGenres().subscribe({
-      next: (data) => {
+      next: (data: string[]) => {
         data.unshift('');
         genres.set(data);
       },
-      error: (error) => console.error(error)
+      error: (error) => {
+        error.set(error);
+        console.error(error);
+      }
     });
   }
 
-  public delete(id: number, successCallback: () => void): void {
+  public delete(id: number, successCallback: () => void, error: WritableSignal<string | null>): void {
     this.physicalRecordsApiService.deletePhysicalRecord(id).subscribe({
       next: () => successCallback(),
-      error: (error) => console.error(error)
+      error: (error: any) => {
+        error.set(error);
+        console.error(error);
+      }
     });
   }
 
-  public update(id: number, formGroup: FormGroup, successCallback: () => void, errorCallback: (error: any) => void): void {
+  public update(id: number, formGroup: FormGroup, successCallback: () => void, error: WritableSignal<string | null>): void {
     const payload = formGroup.getRawValue();
     this.physicalRecordsApiService.updatePhysicalRecord(id, payload).subscribe({
       next: () => successCallback(),
-      error: (error) => errorCallback(error)
+      error: (error) => {
+        error.set(error);
+        console.error(error);
+      }
     });
   }
 
-  public handleConfirmationDeletion(id: number, successCallback: () => void): void {
+  public handleConfirmationDeletion(id: number, successCallback: () => void, error: WritableSignal<string | null>): void {
     const confirmDeletion: Promise<SweetAlertResult> = this.alertService.showAlert(confirmDeleteOptions);
 
     confirmDeletion.then((result) => {
       if (result.isConfirmed) {
-        this.delete(id, () => successCallback());
+        this.delete(id, () => successCallback(), error);
       }
     });
   }

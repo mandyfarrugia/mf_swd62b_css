@@ -140,6 +140,8 @@ export class RecordsListComponent implements OnInit {
   }
 
   public onRecordDeleted(deletedId: number) {
+    /* Update the signal by filtering by records whose IDs do not match that of the deleted entity.
+     * This ensures the list of records is refreshed without calling the backend again. */
     this.physicalRecords.update(records => records.filter(record => record.id !== deletedId));
     this.alertService.showAlert(recordDeletedNotification);
   }
