@@ -3,9 +3,8 @@ import { GenreColourCodingService } from './../../services/genre-colour-coding-s
 import { AuthenticationService } from '../../services/authentication-service';
 import { RouterModule } from '@angular/router';
 import { Component, OnInit, signal } from '@angular/core';
-import { PhysicalRecordsService } from '../../services/physical-records-service';
+import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
-import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
 import { AlertService } from '../../services/alert-service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -38,7 +37,7 @@ export class RecordsListComponent implements OnInit {
     private alertService: AlertService,
     private authorisationService: AuthorisationService,
     private authenticationService : AuthenticationService,
-    private physicalRecordsService : PhysicalRecordsService,
+    private physicalRecordsApiService : PhysicalRecordsApiService,
     private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
 
   ngOnInit(): void {
@@ -50,7 +49,7 @@ export class RecordsListComponent implements OnInit {
   }
 
   private loadPhysicalRecords() : void {
-    this.physicalRecordsService.getPhysicalRecords().subscribe({
+    this.physicalRecordsApiService.getPhysicalRecords().subscribe({
       next: (data) => this.physicalRecords.set(data),
       error: (error) => console.log(error)
     });

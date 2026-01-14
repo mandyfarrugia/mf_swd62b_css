@@ -16,7 +16,7 @@ export class RecordTableRowComponent {
   @Input({required:true}) physicalRecord: PhysicalRecordDto | null = null;
   @Output() recordDeletedEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private authorisationService: AuthorisationService, private authenticationService: AuthenticationService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
+  constructor(private authorisationService: AuthorisationService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
 
   public get authorisationService$() {
     return this.authorisationService;

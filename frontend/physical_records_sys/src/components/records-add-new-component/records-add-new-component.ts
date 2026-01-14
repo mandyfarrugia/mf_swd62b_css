@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GenresService } from '../../services/genres-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
-import { PhysicalRecordsService } from '../../services/physical-records-service';
+import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
 
 @Component({
@@ -19,7 +19,7 @@ export class RecordsAddNewComponent implements OnInit {
   genres: WritableSignal<string[]> = signal<string[]>([]);
   addNewRecordForm: FormGroup;
 
-  constructor(private physicalRecordsService: PhysicalRecordsService, private formatsService: FormatsService, private genresService: GenresService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private physicalRecordsApiService: PhysicalRecordsApiService, private formatsService: FormatsService, private genresService: GenresService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formBuilder: FormBuilder, private router: Router) {
     this.addNewRecordForm = this.formBuilder.nonNullable.group({
       title: ['', [Validators.required]],
       artist: ['', [Validators.required]],
@@ -53,7 +53,7 @@ export class RecordsAddNewComponent implements OnInit {
     if(!this.addNewRecordForm.valid) return;
     const payload: PhysicalRecordDto = this.addNewRecordForm.getRawValue();
     console.log(payload);
-    this.physicalRecordsService.createPhysicalRecord(payload).subscribe({
+    this.physicalRecordsApiService.createPhysicalRecord(payload).subscribe({
       next: () => this.router.navigate(['/records'])
     });
   }

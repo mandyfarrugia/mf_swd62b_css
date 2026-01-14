@@ -1,4 +1,4 @@
-import { environment } from './../environments/environment';
+import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,7 +7,7 @@ import { PhysicalRecordDto } from '../dtos/physical-records-dto';
 @Injectable({
   providedIn: 'root',
 })
-export class PhysicalRecordsService {
+export class PhysicalRecordsApiService {
   private readonly endpoint: string = `${environment.apiUrl}/records`;
 
   constructor(private http: HttpClient) {}

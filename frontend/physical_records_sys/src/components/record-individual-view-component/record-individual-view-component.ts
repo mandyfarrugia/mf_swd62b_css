@@ -3,7 +3,7 @@ import { AlertService } from './../../services/alert-service';
 import { AuthenticationService } from './../../services/authentication-service';
 import { PhysicalRecordDto } from './../../dtos/physical-records-dto';
 import { Component, OnInit, signal } from '@angular/core';
-import { PhysicalRecordsService } from '../../services/physical-records-service';
+import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { CurrencyPipe, LowerCasePipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { StockStatusPipe } from "../../pipes/stock-status-pipe";
@@ -27,7 +27,7 @@ export class RecordIndividualViewComponent implements OnInit {
     private router : Router,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private physicalRecordsService : PhysicalRecordsService,
+    private physicalRecordsApiService : PhysicalRecordsApiService,
     private physicalRecordsFrontendService: PhysicalRecordsFrontendService,
     private stocksService: StocksService
   ) {}
@@ -45,7 +45,7 @@ export class RecordIndividualViewComponent implements OnInit {
     const idParsedFromRequestParameter: number = Number(this.currentRouterService.getStringifiedIdFromRequestBody(this.currentRoute));
     if(!idParsedFromRequestParameter) return;
 
-    this.physicalRecordsService.getPhysicalRecordById(idParsedFromRequestParameter).subscribe({
+    this.physicalRecordsApiService.getPhysicalRecordById(idParsedFromRequestParameter).subscribe({
       next: (data) => this.recordById.set(data),
       error: () => this.router.navigate(['/error-404-not-found'])
     });

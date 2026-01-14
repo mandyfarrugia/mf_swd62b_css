@@ -1,7 +1,6 @@
-import { PhysicalRecordDto } from '../dtos/physical-records-dto';
 import { PhysicalRecordsRepository } from '../interfaces/physical-records-repository';
 import { Injectable, Signal, WritableSignal } from '@angular/core';
-import { PhysicalRecordsService } from './physical-records-service';
+import { PhysicalRecordsApiService } from './physical-records-api-service';
 import { SweetAlertResult } from 'sweetalert2';
 import { confirmDeleteOptions } from '../shared/alert-options';
 import { AlertService } from './alert-service';
@@ -15,7 +14,7 @@ import { FormatsService } from './formats-service';
   providedIn: 'root',
 })
 export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository, GenresRepository, FormatsRepository {
-  constructor(private alertService: AlertService, private physicalRecordsService: PhysicalRecordsService) {}
+  constructor(private alertService: AlertService, private physicalRecordsApiService: PhysicalRecordsApiService) {}
 
   getAllFormats(formatsService: FormatsService, formats: WritableSignal<string[]>): void {
     formatsService.getFormats().subscribe({
@@ -38,7 +37,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
   }
 
   public delete(id: number, successCallback: () => void): void {
-    this.physicalRecordsService.deletePhysicalRecord(id).subscribe({
+    this.physicalRecordsApiService.deletePhysicalRecord(id).subscribe({
       next: () => successCallback(),
       error: (error) => console.error(error)
     });
@@ -46,7 +45,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
 
   public update(id: number, formGroup: FormGroup, successCallback: () => void, errorCallback: (error: any) => void): void {
     const payload = formGroup.getRawValue();
-    this.physicalRecordsService.updatePhysicalRecord(id, payload).subscribe({
+    this.physicalRecordsApiService.updatePhysicalRecord(id, payload).subscribe({
       next: () => successCallback(),
       error: (error) => errorCallback(error)
     });

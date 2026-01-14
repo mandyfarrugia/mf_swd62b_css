@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormatsService } from '../../services/formats-service';
 import { GenresService } from '../../services/genres-service';
-import { PhysicalRecordsService } from '../../services/physical-records-service';
+import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { CurrentRouteService } from '../../services/current-route-service';
 import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
 
@@ -20,7 +20,7 @@ export class RecordsEditComponent implements OnInit {
   editExistingRecordForm: FormGroup;
   recordId!: number;
 
-  constructor(private router: Router, private currentRouterService: CurrentRouteService, private currentRoute: ActivatedRoute, private physicalRecordsService: PhysicalRecordsService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private currentRouterService: CurrentRouteService, private currentRoute: ActivatedRoute, private physicalRecordsApiService: PhysicalRecordsApiService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formatsService: FormatsService, private genresService: GenresService, private formBuilder: FormBuilder) {
     this.editExistingRecordForm = this.formBuilder.nonNullable.group({
       title: ['', [Validators.required]],
       artist: ['', [Validators.required]],
@@ -45,7 +45,7 @@ export class RecordsEditComponent implements OnInit {
   }
 
   private loadRecord(): void {
-    this.physicalRecordsService.getPhysicalRecordById(this.recordId).subscribe({
+    this.physicalRecordsApiService.getPhysicalRecordById(this.recordId).subscribe({
       next: (data) => this.editExistingRecordForm.patchValue(data),
       error: (error) => console.log(error)
     })
