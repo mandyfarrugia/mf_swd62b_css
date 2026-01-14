@@ -10,7 +10,12 @@ import { NotFoundComponent } from '../components/not-found-component/not-found-c
 export const routes: Routes = [
     { path: '', redirectTo: 'records', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: 'records', component: RecordsListComponent },
+    {
+      path: 'records',
+      component: RecordsListComponent,
+      canActivate: [roleGuard],
+      data: { roles: ['clerk', 'manager', 'admin'] }
+    },
     {
       path: 'records/view/:id',
       component: RecordIndividualViewComponent,

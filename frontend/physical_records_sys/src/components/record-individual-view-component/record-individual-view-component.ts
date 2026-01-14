@@ -1,7 +1,7 @@
-import { StocksService } from './../../services/stocks-service';
-import { AlertService } from './../../services/alert-service';
-import { AuthenticationService } from './../../services/authentication-service';
-import { PhysicalRecordDto } from './../../dtos/physical-records-dto';
+import { StocksService } from '../../services/stocks-service';
+import { AlertService } from '../../services/alert-service';
+import { AuthenticationService } from '../../services/authentication-service';
+import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { CurrencyPipe, LowerCasePipe, NgClass } from '@angular/common';
@@ -24,10 +24,9 @@ export class RecordIndividualViewComponent implements OnInit {
   constructor(
     private currentRouterService: CurrentRouteService,
     private currentRoute: ActivatedRoute,
-    private router : Router,
-    private alertService: AlertService,
+    private router: Router,
     private authenticationService: AuthenticationService,
-    private physicalRecordsApiService : PhysicalRecordsApiService,
+    private physicalRecordsApiService: PhysicalRecordsApiService,
     private physicalRecordsFrontendService: PhysicalRecordsFrontendService,
     private stocksService: StocksService
   ) {}
