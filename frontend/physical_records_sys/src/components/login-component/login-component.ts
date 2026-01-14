@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +12,9 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   loginForm : FormGroup;
-  error : string = '';
+  error! : string;
+
+  _error: WritableSignal<string | null> = signal<string | null>(null)
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,7 +38,7 @@ export class LoginComponent {
         console.log('Login successful:', user);
       },
       error: (error) => {
-        this.error = error.error?.message || 'An error occurred during login.';
+        this._error.set(error.error?.message || 'An error occurred during login.')
         console.error('Login failed:', error);
       }
     });

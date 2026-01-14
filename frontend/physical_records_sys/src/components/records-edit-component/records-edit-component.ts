@@ -62,13 +62,7 @@ export class RecordsEditComponent implements OnInit {
   }
 
   public loadGenres(): void {
-    this.genresService.getGenres().subscribe({
-      next: (data) => {
-        data.unshift('');
-        this.genres.set(data);
-      },
-      error: (error) => console.error(error)
-    });
+    this.physicalRecordsFrontendService.getAllGenres(this.genresService, this.genres);
   }
 
   public onSubmit(): void {

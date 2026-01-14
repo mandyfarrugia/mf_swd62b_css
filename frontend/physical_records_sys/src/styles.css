@@ -34,3 +34,11 @@
 .electronic-genre {
   background-color: #34b4ac !important;
 }
+
+.render-visible {
+  display: block;
+}
+
+.render-invisible {
+  display: none;
+}

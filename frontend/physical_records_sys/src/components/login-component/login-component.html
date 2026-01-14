@@ -6,7 +6,9 @@
         <div class="form-group mb-3">
             <label class="form-label" for="">Email</label>
             <input class="form-control" type="text" placeholder="local-part@domain-name" formControlName="email"/>
-            <small class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">A valid email address is required.</small>
+            @if(this.formControls['email'].touched && this.formControls['email'].invalid) {
+              <small class="text-danger">A valid email address is required.</small>
+            }
         </div>
         <div class="form-group mb-3">
             <label class="form-label" for="">Password</label>
@@ -16,7 +18,9 @@
         <div class="form-group mb-3">
             <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">Login</button>
         </div>
-        <p class="text-danger mt-3">{{ error }}</p>
+        @if(this._error()) {
+          <p class="text-danger mt-3">{{ this._error() }}</p>
+        }
     </form>
   </div>
 </div>
