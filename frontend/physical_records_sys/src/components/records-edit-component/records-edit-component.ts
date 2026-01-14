@@ -9,7 +9,7 @@ import { PhysicalRecordsFrontendService } from '../../services/physical-records-
 
 @Component({
   standalone: true,
-  selector: 'app-records-edit-component',
+  selector: 'records-edit-component',
   imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './records-edit-component.html',
   styleUrl: './records-edit-component.css',

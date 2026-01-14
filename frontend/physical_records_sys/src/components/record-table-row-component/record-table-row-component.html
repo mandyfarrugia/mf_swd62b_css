@@ -1,0 +1,12 @@
+<th scope="row">{{ physicalRecord!.id }}</th>
+<td>{{ physicalRecord!.customerId | fallbackValue }}</td>
+<td>{{ physicalRecord!.customerLastName | fallbackValue }}</td>
+<td>{{ physicalRecord!.format }}</td>
+<td>{{ physicalRecord!.genre }}</td>
+<td>
+  <div class="btn-group" role="group" aria-label="Action buttons to delete, edit, or view individual physical records.">
+    <button type="button" class="btn btn-primary" [routerLink]="['/records/view/', physicalRecord!.id]" [disabled]="!this.authorisationService$.canViewRecords"><i class="bi bi-eye-fill"></i> View</button>
+    <button type="button" class="btn btn-warning text-light" [routerLink]="['/records/edit', physicalRecord!.id]" [disabled]="!this.authorisationService$.canUpdateRecords"><i class="bi bi-pencil-fill"></i> Update</button>
+    <button type="button" class="btn btn-danger" (click)="deletePhysicalRecord(physicalRecord!.id)" [disabled]="!this.authorisationService$.canDeleteRecords"><i class="bi bi-trash3-fill"></i> Delete</button>
+  </div>
+</td>

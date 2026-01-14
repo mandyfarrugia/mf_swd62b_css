@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login-component',
+  selector: 'login-component',
   imports: [ CommonModule, ReactiveFormsModule ],
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',

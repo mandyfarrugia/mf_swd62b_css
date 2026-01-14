@@ -6,19 +6,20 @@ import { Component, OnInit, signal } from '@angular/core';
 import { PhysicalRecordsService } from '../../services/physical-records-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from '../../pipes/fallback-value-pipe';
-import { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { AlertService } from '../../services/alert-service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
-import { baseAlertOptions, confirmDeleteOptions, recordDeletedNotification } from '../../shared/alert-options';
+import { recordDeletedNotification } from '../../shared/alert-options';
+import { RecordTableRowComponent } from "../record-table-row-component/record-table-row-component";
+import { AuthorisationService } from '../../services/authorisation-service';
 
 @Component({
   standalone: true,
   selector: 'records-list-component',
-  imports: [RouterModule, FallbackValuePipe],
+  imports: [RouterModule, RecordTableRowComponent, RecordTableRowComponent],
   templateUrl: './records-list-component.html',
   styleUrl: './records-list-component.css',
 })
@@ -31,24 +32,21 @@ export class RecordsListComponent implements OnInit {
    * Simply using physicalRecords will cause the following error:
    * TS2488: Type 'WritableSignal<PhysicalRecordDto[]>' must have a '[Symbol.iterator]()' method that returns an iterator. */
   physicalRecords = signal<PhysicalRecordDto[]>([]);
-  canViewRecords : boolean = false;
-  canAddRecords : boolean = false;
-  canUpdateRecords : boolean = false;
-  canDeleteRecords : boolean = false;
 
   constructor(
     private genreColourCodingService: GenreColourCodingService,
     private alertService: AlertService,
+    private authorisationService: AuthorisationService,
     private authenticationService : AuthenticationService,
     private physicalRecordsService : PhysicalRecordsService,
     private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
-    this.canViewRecords = this.authenticationService.canViewRecords();
-    this.canAddRecords = this.authenticationService.canAddRecords();
-    this.canUpdateRecords = this.authenticationService.canUpdateRecords();
-    this.canDeleteRecords = this.authenticationService.canDeleteRecords();
+  }
+
+  public get authorisationService$() {
+    return this.authorisationService;
   }
 
   private loadPhysicalRecords() : void {
@@ -142,12 +140,8 @@ export class RecordsListComponent implements OnInit {
     });
   }
 
-  public deletePhysicalRecord(id: number): void {
-    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.handleSuccessfulDeletion());
-  }
-
-  private handleSuccessfulDeletion() {
-    this.loadPhysicalRecords();
+  public onRecordDeleted(deletedId: number) {
+    this.physicalRecords.update(records => records.filter(record => record.id !== deletedId));
     this.alertService.showAlert(recordDeletedNotification);
   }
 }

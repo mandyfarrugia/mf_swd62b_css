@@ -12,7 +12,7 @@ import { CurrentRouteService } from '../../services/current-route-service';
 
 @Component({
   standalone: true,
-  selector: 'app-record-individual-view-component',
+  selector: 'record-individual-view-component',
   imports: [RouterLink, RouterModule, CurrencyPipe, LowerCasePipe, StockStatusPipe, NgClass],
   templateUrl: './record-individual-view-component.html',
   styleUrl: './record-individual-view-component.css',

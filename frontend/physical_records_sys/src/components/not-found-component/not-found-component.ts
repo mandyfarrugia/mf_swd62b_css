@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  selector: 'app-not-found-component',
+  selector: 'not-found-component',
   imports: [RouterModule],
   templateUrl: './not-found-component.html',
   styleUrl: './not-found-component.css',
