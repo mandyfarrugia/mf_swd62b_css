@@ -89,7 +89,7 @@ export class RecordsListComponent implements OnInit {
     };
 
     autoTable(document, pdfExportOptions);
-    document.save('export.pdf');
+    document.save('pdf-export.pdf');
   }
 
   public exportRecordsToExcel() {
@@ -150,7 +150,7 @@ export class RecordsListComponent implements OnInit {
 
     workbook.xlsx.writeBuffer().then(buffer => {
       const blob: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      saveAs(blob, 'records.xlsx');
+      saveAs(blob, 'excel-export.xlsx');
     });
   }
 
