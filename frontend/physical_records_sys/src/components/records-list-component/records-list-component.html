@@ -14,7 +14,8 @@
 @if(this.physicalRecords().length === 0) {
   <div class="alert alert-warning">No records available!</div>
 } @else {
-  <table class="table">
+  <div class="table-responsive">
+    <table class="table">
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -27,8 +28,9 @@
     </thead>
     <tbody>
       @for(physicalRecord of physicalRecords(); track physicalRecord.id) {
-        <tr record-table-row-component [physicalRecord]="physicalRecord" (recordDeletedEvent)="this.onRecordDeleted(physicalRecord.id)"></tr>
+        <tr record-table-row-component [physicalRecord]="physicalRecord" (recordDeletedEvent)="this.onRecordDeleted($event)"></tr>
       }
     </tbody>
   </table>
+  </div>
 }

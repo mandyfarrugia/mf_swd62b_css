@@ -63,15 +63,20 @@ export class RecordsListComponent implements OnInit {
       record.genre,
       record.format,
       record.price.toLocaleString('en-GB', { style: 'currency', currency: 'EUR' }),
-      record.stockQty
+      record.stockQty,
+      record.customerId,
+      record.customerFirstName,
+      record.customerLastName,
+      record.customerContact,
+      record.customerEmail
     ]));
   }
 
   public exportRecordsToPDF() {
-    const document: jsPDF = new jsPDF();
+    const document: jsPDF = new jsPDF({ orientation: 'landscape', format: 'a4' });
 
     const pdfExportOptions: UserOptions = {
-      head: [['Record ID', 'Title', 'Artist', 'Genre', 'Format', 'Price', 'Stock']],
+      head: [['Record ID', 'Title', 'Artist', 'Genre', 'Format', 'Price', 'Stock', 'Customer ID', 'Forename', 'Surname', 'Contact Number', 'Email']],
       body: this.mapRecordsToColumns(this.physicalRecords()),
       didParseCell: (data: CellHookData) => {
         if(data.section === 'body') {
@@ -98,7 +103,12 @@ export class RecordsListComponent implements OnInit {
       { header: 'Genre', key: 'genre', width: 15 },
       { header: 'Format', key: 'format', width: 15 },
       { header: 'Stock Available', key: 'stockQty', width: 15 },
-      { header: 'Price', key: 'price', width: 15 }
+      { header: 'Price', key: 'price', width: 15 },
+      { header: 'Customer ID', key: 'customerId', width: 15 },
+      { header: 'Forename', key: 'customerFirstName', width: 15 },
+      { header: 'Surname', key: 'customerLastName', width: 15 },
+      { header: 'Contact Number', key: 'customerContact', width: 15 },
+      { header: 'Email', key: 'customerEmail', width: 15 },
     ];
 
     sheet.getRow(1).font = { bold: true };
@@ -111,8 +121,13 @@ export class RecordsListComponent implements OnInit {
         genre: record.genre,
         format: record.format,
         stockQty: record.stockQty,
-        price: record.price
-      });
+        price: record.price,
+        customerId: record.customerId,
+        customerFirstName: record.customerFirstName,
+        customerLastName: record.customerLastName,
+        customerContact: record.customerContact,
+        customerEmail: record.customerEmail
+    });
 
       const backgroundColourBasedOnGenre = this.genreColourCodingService.getArgbBackgroundHexColourForGenre(record?.genre.toLocaleLowerCase()).replace('#', '');
       const foregroundColourBasedOnGenre = this.genreColourCodingService.getArgbForegroundHexColourForGenre(record?.genre.toLocaleLowerCase()).replace('#', '');

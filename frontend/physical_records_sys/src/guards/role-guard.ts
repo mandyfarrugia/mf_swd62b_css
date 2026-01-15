@@ -9,7 +9,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const allowedRoles = route.data['roles'] as string[]; //Fetch the roles metadata specified within data in the routing configuration.
 
   if (!authenticationService.isAuthenticated()) {
-    router.navigate(['/login']);
+    router.navigate(['/login']); //Override default navigation by redirecting user to the login page instead if they are not yet authenticated.
     return false; //Block navigation to the path specified in routerLink.
   }
 

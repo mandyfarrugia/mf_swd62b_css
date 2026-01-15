@@ -20,8 +20,8 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
   create(payload: PhysicalRecordDto, successCallback: () => void, error: WritableSignal<string | null>): void {
     this.physicalRecordsApiService.createPhysicalRecord(payload).subscribe({
       next: () => successCallback(),
-      error: (error) => {
-        error.set(error);
+      error: (httpError: HttpErrorResponse) => {
+        error.set(httpError?.error?.message ?? httpError?.message);
         console.error(error);
       }
     });
@@ -34,7 +34,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
         formats.set(data);
       },
       error: (httpError: HttpErrorResponse) => {
-        error.set(httpError?.message);
+        error.set(httpError?.error?.message ?? httpError?.message);
         console.error(httpError);
       }
     });
@@ -47,7 +47,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
         genres.set(data);
       },
       error: (httpError: HttpErrorResponse) => {
-        error.set(httpError?.message);
+        error.set(httpError?.error?.message ?? httpError?.message);
         console.error(httpError);
       }
     });
@@ -57,7 +57,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
     this.physicalRecordsApiService.deletePhysicalRecord(id).subscribe({
       next: () => successCallback(),
       error: (httpError: HttpErrorResponse) => {
-        error.set(httpError?.message);
+        error.set(httpError?.error?.message ?? httpError?.message);
         console.error(httpError);
       }
     });
@@ -67,7 +67,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
     this.physicalRecordsApiService.updatePhysicalRecord(id, payload).subscribe({
       next: () => successCallback(),
       error: (httpError: HttpErrorResponse) => {
-        error.set(httpError?.message);
+        error.set(httpError?.error?.message ?? httpError?.message);
         console.error(httpError);
       }
     });

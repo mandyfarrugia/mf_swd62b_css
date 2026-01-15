@@ -107,7 +107,9 @@
       <div class="form-group mb-3">
         <button class="btn btn-success" type="submit" [disabled]="this.editExistingRecordForm.invalid">Update record</button>
       </div>
-      <!-- <p class="text-danger mt-3">{{ error }}</p> -->
+      @if(this.error()) {
+        <p class="text-danger mt-3">{{ this.error() }}</p>
+      }
     </form>
   </div>
 </div>

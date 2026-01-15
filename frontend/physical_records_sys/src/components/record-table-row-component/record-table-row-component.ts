@@ -3,7 +3,6 @@ import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from "../../pipes/fallback-value-pipe";
 import { RouterLink } from '@angular/router';
 import { PhysicalRecordsFrontendService } from '../../services/physical-records-frontend-service';
-import { AuthenticationService } from '../../services/authentication-service';
 import { AuthorisationService } from '../../services/authorisation-service';
 
 @Component({

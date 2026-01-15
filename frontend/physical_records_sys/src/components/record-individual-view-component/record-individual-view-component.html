@@ -78,5 +78,10 @@
       <button type="button" class="btn btn-warning text-light" [routerLink]="['/records/edit', this.recordById()?.id]" [disabled]="!this.authenticationService$.canUpdateRecords()">Update</button>
       <button type="button" class="btn btn-danger" (click)="deletePhysicalRecord(this.recordById()?.id)" [disabled]="!this.authenticationService$.canDeleteRecords()">Delete</button>
     </div>
+    <div>
+      @if(this.error()) {
+        <p class="text-danger mt-3">{{ this.error() }}</p>
+      }
+    </div>
   </div>
 </div>
