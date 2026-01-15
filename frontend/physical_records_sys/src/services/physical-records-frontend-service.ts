@@ -22,7 +22,7 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
       next: () => successCallback(),
       error: (httpError: HttpErrorResponse) => {
         error.set(httpError?.error?.message ?? httpError?.message);
-        console.error(error);
+        console.error(httpError);
       }
     });
   }

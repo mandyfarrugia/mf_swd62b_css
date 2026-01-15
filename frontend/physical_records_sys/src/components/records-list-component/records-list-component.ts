@@ -2,7 +2,7 @@ import { CellHookData, UserOptions } from './../../../node_modules/jspdf-autotab
 import { GenreColourCodingService } from './../../services/genre-colour-coding-service';
 import { AuthenticationService } from '../../services/authentication-service';
 import { RouterModule } from '@angular/router';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { AlertService } from '../../services/alert-service';
@@ -14,6 +14,7 @@ import { PhysicalRecordsFrontendService } from '../../services/physical-records-
 import { recordDeletedNotification } from '../../shared/alert-options';
 import { RecordTableRowComponent } from "../record-table-row-component/record-table-row-component";
 import { AuthorisationService } from '../../services/authorisation-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -30,7 +31,8 @@ export class RecordsListComponent implements OnInit {
    * In the HTML template, the value is read via physicalRecords().
    * Simply using physicalRecords will cause the following error:
    * TS2488: Type 'WritableSignal<PhysicalRecordDto[]>' must have a '[Symbol.iterator]()' method that returns an iterator. */
-  physicalRecords = signal<PhysicalRecordDto[]>([]);
+  physicalRecords: WritableSignal<PhysicalRecordDto[]> = signal<PhysicalRecordDto[]>([]);
+  error: WritableSignal<string | null> = signal<string | null>(null);
 
   constructor(
     private genreColourCodingService: GenreColourCodingService,
@@ -49,7 +51,10 @@ export class RecordsListComponent implements OnInit {
   private loadPhysicalRecords() : void {
     this.physicalRecordsApiService.getPhysicalRecords().subscribe({
       next: (data) => this.physicalRecords.set(data),
-      error: (error) => console.log(error)
+      error: (httpError: HttpErrorResponse) => {
+        this.error.set(httpError?.error?.message ?? httpError?.message);
+        console.error(httpError);
+      }
     });
   }
 

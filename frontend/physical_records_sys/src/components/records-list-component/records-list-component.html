@@ -14,6 +14,9 @@
 @if(this.physicalRecords().length === 0) {
   <div class="alert alert-warning">No records available!</div>
 } @else {
+  @if(this.error()) {
+    <p class="text-danger mt-3">{{ this.error() }}</p>
+  }
   <div class="table-responsive">
     <table class="table">
     <thead>
