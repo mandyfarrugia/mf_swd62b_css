@@ -1,5 +1,4 @@
 import { StocksService } from '../../services/stocks-service';
-import { AlertService } from '../../services/alert-service';
 import { AuthenticationService } from '../../services/authentication-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
