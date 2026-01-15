@@ -138,7 +138,7 @@ let records = [
 
 // ===== Routes =====
 
-// Health check
+//Health check
 // app.get('/', (req, res) => {
 //   res.send('Record Shop API is running');
 // });
