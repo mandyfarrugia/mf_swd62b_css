@@ -5,10 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FallbackValuePipe implements PipeTransform {
   transform(value: string): string {
-    if(!value) {
-      return "No data found!";
-    }
-
-    return value;
+    return (!value) ? "No data found!" : value;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal } from '@angular/core';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
 import { FallbackValuePipe } from "../../pipes/fallback-value-pipe";
 import { RouterLink } from '@angular/router';
@@ -15,6 +15,7 @@ import { AuthorisationService } from '../../services/authorisation-service';
 export class RecordTableRowComponent {
   @Input({required:true}) physicalRecord: PhysicalRecordDto | null = null;
   @Output() recordDeletedEvent: EventEmitter<number> = new EventEmitter<number>();
+  error: WritableSignal<string | null> = signal<string | null>(null);
 
   constructor(private authorisationService: AuthorisationService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
 
@@ -23,6 +24,6 @@ export class RecordTableRowComponent {
   }
 
   public deletePhysicalRecord(id: number): void {
-    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.recordDeletedEvent.emit(id));
+    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.recordDeletedEvent.emit(id), this.error);
   }
 }

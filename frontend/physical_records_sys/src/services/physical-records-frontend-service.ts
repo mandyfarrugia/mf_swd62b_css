@@ -4,11 +4,12 @@ import { PhysicalRecordsApiService } from './physical-records-api-service';
 import { SweetAlertResult } from 'sweetalert2';
 import { confirmDeleteOptions } from '../shared/alert-options';
 import { AlertService } from './alert-service';
-import { FormGroup } from '@angular/forms';
 import { GenresRepository } from '../interfaces/genres-repository';
 import { GenresService } from './genres-service';
 import { FormatsRepository } from '../interfaces/formats-repository';
 import { FormatsService } from './formats-service';
+import { PhysicalRecordDto } from '../dtos/physical-records-dto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +17,25 @@ import { FormatsService } from './formats-service';
 export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository, GenresRepository, FormatsRepository {
   constructor(private alertService: AlertService, private physicalRecordsApiService: PhysicalRecordsApiService) {}
 
+  create(payload: PhysicalRecordDto, successCallback: () => void, error: WritableSignal<string | null>): void {
+    this.physicalRecordsApiService.createPhysicalRecord(payload).subscribe({
+      next: () => successCallback(),
+      error: (error) => {
+        error.set(error);
+        console.error(error);
+      }
+    });
+  }
+
   getAllFormats(formatsService: FormatsService, formats: WritableSignal<string[]>, error: WritableSignal<string | null>): void {
     formatsService.getFormats().subscribe({
       next: (data: string[]) => {
         data.unshift('');
         formats.set(data);
       },
-      error: (error) => {
-        error.set(error);
-        console.error(error);
+      error: (httpError: HttpErrorResponse) => {
+        error.set(httpError?.message);
+        console.error(httpError);
       }
     });
   }
@@ -35,9 +46,9 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
         data.unshift('');
         genres.set(data);
       },
-      error: (error) => {
-        error.set(error);
-        console.error(error);
+      error: (httpError: HttpErrorResponse) => {
+        error.set(httpError?.message);
+        console.error(httpError);
       }
     });
   }
@@ -45,20 +56,19 @@ export class PhysicalRecordsFrontendService implements PhysicalRecordsRepository
   public delete(id: number, successCallback: () => void, error: WritableSignal<string | null>): void {
     this.physicalRecordsApiService.deletePhysicalRecord(id).subscribe({
       next: () => successCallback(),
-      error: (error: any) => {
-        error.set(error);
-        console.error(error);
+      error: (httpError: HttpErrorResponse) => {
+        error.set(httpError?.message);
+        console.error(httpError);
       }
     });
   }
 
-  public update(id: number, formGroup: FormGroup, successCallback: () => void, error: WritableSignal<string | null>): void {
-    const payload = formGroup.getRawValue();
+  public update(id: number, payload: PhysicalRecordDto, successCallback: () => void, error: WritableSignal<string | null>): void {
     this.physicalRecordsApiService.updatePhysicalRecord(id, payload).subscribe({
       next: () => successCallback(),
-      error: (error) => {
-        error.set(error);
-        console.error(error);
+      error: (httpError: HttpErrorResponse) => {
+        error.set(httpError?.message);
+        console.error(httpError);
       }
     });
   }

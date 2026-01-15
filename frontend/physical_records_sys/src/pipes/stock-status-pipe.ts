@@ -1,8 +1,5 @@
 import { StocksService } from './../services/stocks-service';
 import { Pipe, PipeTransform } from '@angular/core';
-import { StockStatusKey } from '../types/stock-status-key-types';
-import { StockStatusValue } from '../types/stock-status-value-types';
-import { retry } from 'rxjs';
 
 @Pipe({
   name: 'stockStatus',

@@ -65,7 +65,8 @@ export class RecordsEditComponent implements OnInit {
 
   public onSubmit(): void {
     if(!this.editExistingRecordForm.valid) return;
-    this.physicalRecordsFrontendService.update(this.recordId, this.editExistingRecordForm, () => this.router.navigate(['/records']), this.error);
+    const payload = this.editExistingRecordForm.getRawValue();
+    this.physicalRecordsFrontendService.update(this.recordId, payload, () => this.router.navigate(['/records']), this.error);
   }
 
   public get formControls() {

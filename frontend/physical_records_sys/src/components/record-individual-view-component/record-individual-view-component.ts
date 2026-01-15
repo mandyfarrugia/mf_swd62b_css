@@ -2,7 +2,7 @@ import { StocksService } from '../../services/stocks-service';
 import { AlertService } from '../../services/alert-service';
 import { AuthenticationService } from '../../services/authentication-service';
 import { PhysicalRecordDto } from '../../dtos/physical-records-dto';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { PhysicalRecordsApiService } from '../../services/physical-records-api-service';
 import { CurrencyPipe, LowerCasePipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
@@ -20,6 +20,7 @@ import { CurrentRouteService } from '../../services/current-route-service';
 export class RecordIndividualViewComponent implements OnInit {
   recordId!: number;
   recordById = signal<PhysicalRecordDto | null>(null);
+  error: WritableSignal<string | null> = signal<string | null>(null);
 
   constructor(
     private currentRouterService: CurrentRouteService,
@@ -56,6 +57,6 @@ export class RecordIndividualViewComponent implements OnInit {
 
   public deletePhysicalRecord(id: number | undefined) : void {
     if(!id) return;
-    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.router.navigate(['/records']));
+    this.physicalRecordsFrontendService.handleConfirmationDeletion(id, () => this.router.navigate(['/records']), this.error);
   }
 }

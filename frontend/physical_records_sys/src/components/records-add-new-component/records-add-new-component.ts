@@ -17,6 +17,7 @@ import { PhysicalRecordsFrontendService } from '../../services/physical-records-
 export class RecordsAddNewComponent implements OnInit {
   formats: WritableSignal<string[]> = signal<string[]>([]);
   genres: WritableSignal<string[]> = signal<string[]>([]);
+  error: WritableSignal<string | null> = signal<string | null>(null);
   addNewRecordForm: FormGroup;
 
   constructor(private physicalRecordsApiService: PhysicalRecordsApiService, private formatsService: FormatsService, private genresService: GenresService, private physicalRecordsFrontendService: PhysicalRecordsFrontendService, private formBuilder: FormBuilder, private router: Router) {
@@ -42,20 +43,17 @@ export class RecordsAddNewComponent implements OnInit {
   }
 
   private loadFormats(): void {
-    this.physicalRecordsFrontendService.getAllFormats(this.formatsService, this.formats);
+    this.physicalRecordsFrontendService.getAllFormats(this.formatsService, this.formats, this.error);
   }
 
   public loadGenres(): void {
-    this.physicalRecordsFrontendService.getAllGenres(this.genresService, this.genres);
+    this.physicalRecordsFrontendService.getAllGenres(this.genresService, this.genres, this.error);
   }
 
   public onSubmit(): void {
     if(!this.addNewRecordForm.valid) return;
     const payload: PhysicalRecordDto = this.addNewRecordForm.getRawValue();
-    console.log(payload);
-    this.physicalRecordsApiService.createPhysicalRecord(payload).subscribe({
-      next: () => this.router.navigate(['/records'])
-    });
+    this.physicalRecordsFrontendService.create(payload, () => this.router.navigate(['/records']), this.error);
   }
 
   public get formControls() {
