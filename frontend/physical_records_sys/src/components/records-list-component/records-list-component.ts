@@ -36,9 +36,7 @@ export class RecordsListComponent implements OnInit {
     private genreColourCodingService: GenreColourCodingService,
     private alertService: AlertService,
     private authorisationService: AuthorisationService,
-    private authenticationService : AuthenticationService,
-    private physicalRecordsApiService : PhysicalRecordsApiService,
-    private physicalRecordsFrontendService: PhysicalRecordsFrontendService) {}
+    private physicalRecordsApiService : PhysicalRecordsApiService) {}
 
   ngOnInit(): void {
     this.loadPhysicalRecords();
@@ -108,7 +106,7 @@ export class RecordsListComponent implements OnInit {
       { header: 'Forename', key: 'customerFirstName', width: 15 },
       { header: 'Surname', key: 'customerLastName', width: 15 },
       { header: 'Contact Number', key: 'customerContact', width: 15 },
-      { header: 'Email', key: 'customerEmail', width: 15 },
+      { header: 'Email', key: 'customerEmail', width: 45 },
     ];
 
     sheet.getRow(1).font = { bold: true };
